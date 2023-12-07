@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Turf - https://turfjs.org/ -->
+    <script src="https://cdn.jsdelivr.net/npm/@turf/turf@6.3.0/turf.min.js" integrity="sha256-61XYRdJcsdgC6tmgA3BaHJX1Y6b1GcPUIKiixSyeBqc=" crossorigin="anonymous"></script>
+
+    <script src="https://cdn.jsdelivr.net/gh/CSOIreland/PxWidget@2.6.1/js/isogram.min.js"></script>
+
+    <!-- Select2 updated - https://select2.org/getting-started/installation -->
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <!-- JSON-Stat - https://github.com/badosa/JSON-stat/ -->
+    <script src="https://cdn.jsdelivr.net/gh/badosa/JSON-stat@v0.13.3/json-stat.min.js" integrity="sha256-p83KJSAVJm2EVXl2rAbOsuWHWOMN1WbptMq+BA1BJPY=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/gh/CSOIreland/T4-SDK@2.2.0/t4sdk.library.js" crossorigin="anonymous"></script>
+
+    <script src="pxwidget.constant.min.js"></script>
+    <script src="pxwidget.library.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            // var dataParent = null;
+
+            $.ajax({
+                "url": "https://ws.cso.ie/public/api.static/PxStat.Data.GeoMap_API.Read/01bf8f2912f9795a10c35581cba0dff4",
+                "dataType": "json"
+            }).done(function (responseParent) {
+                //dataParent = responseParent;
+
+                $.ajax({
+                    "url": "https://ws.cso.ie/public/api.static/PxStat.Data.GeoMap_API.Read/dc342ded3e0ec8884e99eebd766f8233",
+                    // "url": "https://services-eu1.arcgis.com/BuS9rtTsYEV5C0xh/arcgis/rest/services/Small_Area_National_Statistical_Boundaries_2022_Ungeneralised_view/FeatureServer/0/query?outFields=*&where=1%3D1&f=geojson",
+                    "dataType": "json"
+                }).done(function (responseSibling) {
+
+                    $("select[name=select-area]").empty().append($("<option>")).select2({
+                        minimumInputLength: 0,
+                        allowClear: true,
+                        width: '80%',
+                        placeholder: "Select an Area",
+                        data: getFeaturesForSelect(responseParent)
+                    }).on('select2:select', function (e) {
+                        if ($(this).val()) {
+                            $('[name="results"]').hide();
+                            parseData(responseParent, responseSibling)
+                        }
+                    });
+
+                    //  
+                });
+
+            });
+        });
+
+        parseData = function (dataParent, dataSibling) {
+
+            // var randomParentFeature = dataParent.features[Math.floor(Math.random() * dataParent.features.length)];
+
+            var feature = $.grep(dataParent.features, function (element, index) {
+                return element.properties.code == $("select[name=select-area]").val();
+            });
+
+            var featuresInParent = [];
+            $.each(dataSibling.features, function (index, value) {
+                if (turf.intersect(feature[0].geometry, value.geometry)) {
+                    featuresInParent.push(value.properties.code);
+                }
+
+            });
+
+            renderPopulationMap(featuresInParent, feature[0].properties.en);
+            renderHouseMap(featuresInParent, feature[0].properties.en);
+            console.log(JSON.stringify(featuresInParent));
+        };
+
+        renderPopulationMap = function (guids, parentLabel) {
+            $('[name="town"]').text(parentLabel);
+            $('[name="results"]').show();
+            var config = {
+                "autoupdate": true,
+                "matrix": null,
+                "mapDimension": "C04172V04943",
+                "copyright": true,
+                "link": "https://data.cso.ie/table/SAP2022T1T1ASA",
+                "title": null,
+                "borders": true,
+                "colorScale": "red",
+                "tooltipTitle": null,
+                "defaultContent": "..",
+                "fullScreen": {
+                    "title": "View Fullscreen",
+                    "titleCancel": "Exit Fullscreen"
+                },
+                "data": {
+                    "datasets": [{
+                        "api": {
+                            "query": {
+                                "url": "https://ws.cso.ie/public/api.jsonrpc",
+                                "data": {
+                                    "jsonrpc": "2.0",
+                                    "method": "PxStat.Data.Cube_API.ReadDataset",
+                                    "params": {
+                                        "class": "query",
+                                        "id": ["STATISTIC", "TLIST(A1)", "C04172V04943", "C03737V04485", "C03738V04487"],
+                                        "dimension": {
+                                            "STATISTIC": {
+                                                "category": {
+                                                    "index": ["SAP2022T1T1C01"]
+                                                }
+                                            },
+                                            "TLIST(A1)": {
+                                                "category": {
+                                                    "index": ["2022"]
+                                                }
+                                            },
+                                            "C04172V04943": {
+                                                "category": {
+                                                    "index": guids
+                                                }
+                                            },
+                                            "C03737V04485": {
+                                                "category": {
+                                                    "index": ["AGET"]
+                                                }
+                                            },
+                                            "C03738V04487": {
+                                                "category": {
+                                                    "index": ["B"]
+                                                }
+                                            }
+                                        },
+                                        "extension": {
+                                            "language": {
+                                                "code": "en"
+                                            },
+                                            "format": {
+                                                "type": "JSON-stat",
+                                                "version": "2.0"
+                                            },
+                                            "matrix": "SAP2022T1T1ASA"
+                                        },
+                                        "version": "2.0",
+                                        "m2m": false
+                                    }
+                                }
+                            },
+                            "response": {}
+                        },
+                        "fluidTime": [0]
+                    }
+                    ]
+                },
+                "metadata": {
+                    "api": {
+                        "query": {
+                            "url": "https://ws.cso.ie/public/api.jsonrpc",
+                            "data": {
+                                "jsonrpc": "2.0",
+                                "method": "PxStat.Data.Cube_API.ReadMetadata",
+                                "params": {
+                                    "matrix": "SAP2022T1T1ASA",
+                                    "language": "en",
+                                    "format": {
+                                        "type": "JSON-stat",
+                                        "version": "2.0"
+                                    }
+                                },
+                                "version": "2.0"
+                            }
+                        },
+                        "response": {}
+                    }
+                },
+                "options": {
+                    "mode": "q"
+                },
+                "baseMap": {
+                    "leaflet": [],
+                    "esri": [{
+                        "url": "https://utility.arcgis.com/usrsvcs/servers/88f1db9e4ae04df69e499223b8295843/rest/services/MapGeniePremiumWM/MapServer",
+                        "disclaimer": "You can use the OSi basemap layer only in conjunction with the CSO map widgets, all other rights are reserved by OSi."
+                    }
+                    ]
+                }
+            };
+
+            t4Sdk.pxWidget.create(
+                "map",
+                "population-widget-wrapper",
+                true,
+                config,
+                "dropdown",
+                "C03737V04485",
+                null,
+                "AGET"
+            );
+            //pxWidget.draw.init('map', 'map', config)
+
+        }
+
+        renderHouseMap = function (guids, parentLabel) {
+            $('[name="town"]').text(parentLabel);
+            $('[name="results"]').show();
+            var config = {
+                "autoupdate": true,
+                "matrix": null,
+                "mapDimension": "C04172V04943",
+                "copyright": true,
+                "link": "https://data.cso.ie/table/SAP2022T6T2SA",
+                "title": null,
+                "borders": true,
+                "colorScale": "red",
+                "tooltipTitle": null,
+                "defaultContent": "..",
+                "fullScreen": {
+                    "title": "View Fullscreen",
+                    "titleCancel": "Exit Fullscreen"
+                },
+                "data": {
+                    "datasets": [{
+                        "api": {
+                            "query": {
+                                "url": "https://ws.cso.ie/public/api.jsonrpc",
+                                "data": {
+                                    "jsonrpc": "2.0",
+                                    "method": "PxStat.Data.Cube_API.ReadDataset",
+                                    "params": {
+                                        "class": "query",
+                                        "id": ["STATISTIC", "TLIST(A1)", "C04172V04943", "C03782V04531"],
+                                        "dimension": {
+                                            "STATISTIC": {
+                                                "category": {
+                                                    "index": ["SAP2022T6T2C01"]
+                                                }
+                                            },
+                                            "TLIST(A1)": {
+                                                "category": {
+                                                    "index": ["2022"]
+                                                }
+                                            },
+                                            "C04172V04943": {
+                                                "category": {
+                                                    "index": guids
+                                                }
+                                            },
+                                            "C03782V04531": {
+                                                "category": {
+                                                    "index": ["PRE19"]
+                                                }
+                                            }
+                                        },
+                                        "extension": {
+                                            "language": {
+                                                "code": "en"
+                                            },
+                                            "format": {
+                                                "type": "JSON-stat",
+                                                "version": "2.0"
+                                            },
+                                            "matrix": "SAP2022T6T2SA"
+                                        },
+                                        "version": "2.0",
+                                        "m2m": false
+                                    }
+                                }
+                            },
+                            "response": {}
+                        },
+                        "fluidTime": [0]
+                    }
+                    ]
+                },
+                "metadata": {
+                    "api": {
+                        "query": {
+                            "url": "https://ws.cso.ie/public/api.jsonrpc",
+                            "data": {
+                                "jsonrpc": "2.0",
+                                "method": "PxStat.Data.Cube_API.ReadMetadata",
+                                "params": {
+                                    "matrix": "SAP2022T6T2SA",
+                                    "language": "en",
+                                    "format": {
+                                        "type": "JSON-stat",
+                                        "version": "2.0"
+                                    }
+                                },
+                                "version": "2.0"
+                            }
+                        },
+                        "response": {}
+                    }
+                },
+                "options": {
+                    "mode": "q"
+                },
+                "baseMap": {
+                    "leaflet": [],
+                    "esri": [{
+                        "url": "https://utility.arcgis.com/usrsvcs/servers/88f1db9e4ae04df69e499223b8295843/rest/services/MapGeniePremiumWM/MapServer",
+                        "disclaimer": "You can use the OSi basemap layer only in conjunction with the CSO map widgets, all other rights are reserved by OSi."
+                    }
+                    ]
+                }
+            }
+                ;
+
+            t4Sdk.pxWidget.create(
+                "map",
+                "house-widget-wrapper",
+                true,
+                config,
+                "dropdown",
+                "C03782V04531",
+                null,
+                null
+            );
+            //pxWidget.draw.init('map', 'map', config)
+
+        }
+
+
+        getFeaturesForSelect = function (geoJson) {
+            var allAreas = [];
+            $.each(geoJson.features, function (index, value) {
+                allAreas.push({
+                    "id": value.properties.code,
+                    "text": value.properties.en
+                })
+            });
+
+            // sort by name
+            allAreas.sort(function (a, b) {
+                var textA = a.text.toUpperCase(); // ignore upper and lowercase
+                var textB = b.text.toUpperCase(); // ignore upper and lowercase
+                if (textA < textB) {
+                    return -1;
+                }
+                if (textA > textB) {
+                    return 1;
+                }
+
+                // names must be equal
+                return 0;
+            });
+
+            return allAreas;
+        };
+
+    </script>
+</head>
+
+<body>
+
+
+    <div class="container">
+        <h2>Statistics for Towns by Small Area</h2>
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Select a town</h4>
+                <select name="select-area"></select>
+            </div>
+        </div>
+
+        <div name="results" class="card my-2" style="display: none;">
+            <div class="card-body">
+                <h4 class="card-title"><span name="town"></span>: Population by Age</h4>
+                <div id="population-widget-wrapper" class="widget-toggle-wrapper"></div>
+            </div>
+        </div>
+
+        <div name="results" class="card my-2" style="display: none;">
+            <div class="card-body">
+                <h4 class="card-title"><span name="town"></span>: Year house built</h4>
+                <div id="house-widget-wrapper" class="widget-toggle-wrapper"></div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+</body>
+
+</html>
