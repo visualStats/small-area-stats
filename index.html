@@ -30,7 +30,7 @@
             // var dataParent = null;
 
             $.ajax({
-                "url": "https://ws.cso.ie/public/api.static/PxStat.Data.GeoMap_API.Read/01bf8f2912f9795a10c35581cba0dff4",
+                "url": "CSO_Urban_Areas_-_National_Statistical_Boundaries_-_2022_-_Ungeneralised.geojson",
                 "dataType": "json"
             }).done(function (responseParent) {
                 //dataParent = responseParent;
@@ -68,7 +68,7 @@
             // var randomParentFeature = dataParent.features[Math.floor(Math.random() * dataParent.features.length)];
 
             var feature = $.grep(dataParent.features, function (element, index) {
-                return element.properties.code == $("select[name=select-area]").val();
+                return element.properties.URBAN_AREA_GUID == $("select[name=select-area]").val();
             });
 
             selectedSmallareas.features = [];
@@ -85,13 +85,14 @@
                 }
 
             });
-            renderPopulationMap(guidsInParent, feature[0].properties.en);
-            renderHouseMap(guidsInParent, feature[0].properties.en);
-            renderSmokingMap(guidsInParent, feature[0].properties.en);
+            renderPopulationMap(guidsInParent);
+            renderHouseMap(guidsInParent);
+            renderSmokingMap(guidsInParent);
+            $('[name="town"]').text($("select[name=select-area]  option:selected").text());
+            $('[name="results"]').show();
         };
 
-        renderPopulationMap = function (guids, parentLabel) {
-            $('[name="town"]').text(parentLabel);
+        renderPopulationMap = function (guids) {
             $('[name="results"]').show();
             var config = {
                 "autoupdate": true,
@@ -216,9 +217,7 @@
 
         }
 
-        renderHouseMap = function (guids, parentLabel) {
-            $('[name="town"]').text(parentLabel);
-            $('[name="results"]').show();
+        renderHouseMap = function (guids,) {
             var config = {
                 "autoupdate": true,
                 "geojson": selectedSmallareas,
@@ -338,9 +337,7 @@
 
         }
 
-        renderSmokingMap = function (guids, parentLabel) {
-            $('[name="town"]').text(parentLabel);
-            $('[name="results"]').show();
+        renderSmokingMap = function (guids) {
             var config = {
                 "autoupdate": true,
                 "geojson": selectedSmallareas,
@@ -485,8 +482,8 @@
             var allAreas = [];
             $.each(geoJson.features, function (index, value) {
                 allAreas.push({
-                    "id": value.properties.code,
-                    "text": value.properties.en
+                    "id": value.properties.URBAN_AREA_GUID,
+                    "text": value.properties.URBAN_AREA_NAME + " (" + value.properties.COUNTY + ")"
                 })
             });
 
