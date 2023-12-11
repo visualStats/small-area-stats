@@ -30,11 +30,11 @@
             // var dataParent = null;
 
             $.ajax({
-                "url": "CSO_Urban_Areas_-_National_Statistical_Boundaries_-_2022_-_Ungeneralised.geojson",
+                //"url": "CSO_Urban_Areas_-_National_Statistical_Boundaries_-_2022_-_Ungeneralised.geojson",
+                "url": "CSO_Urban_Areas_-_National_Statistical_Boundaries_-_2022_-_Generalised_20m.geojson",
+                //"url": "https://ws.cso.ie/public/api.static/PxStat.Data.GeoMap_API.Read/01bf8f2912f9795a10c35581cba0dff4",
                 "dataType": "json"
             }).done(function (responseParent) {
-                //dataParent = responseParent;
-
                 $.ajax({
                     "url": "small_area_20m.geojson",
                     "dataType": "json"
@@ -54,8 +54,6 @@
                             parseData(responseParent, responseSibling)
                         }
                     });
-
-                    //  
                 });
 
             });
@@ -64,15 +62,15 @@
         var allSmallAreas = null;
         var selectedSmallareas = null;
         parseData = function (dataParent, dataSibling) {
-
-            // var randomParentFeature = dataParent.features[Math.floor(Math.random() * dataParent.features.length)];
-
             var feature = $.grep(dataParent.features, function (element, index) {
                 return element.properties.URBAN_AREA_GUID == $("select[name=select-area]").val();
+                //return element.properties.code == $("select[name=select-area]").val();
+
             });
 
             selectedSmallareas.features = [];
             var guidsInParent = [];
+
             $.each(dataSibling.features, function (index, value) {
                 if (turf.intersect(feature[0].geometry, value.geometry)) {
                     var properties = {
@@ -85,6 +83,7 @@
                 }
 
             });
+
             renderPopulationMap(guidsInParent);
             renderHouseMap(guidsInParent);
             renderSmokingMap(guidsInParent);
@@ -483,7 +482,9 @@
             $.each(geoJson.features, function (index, value) {
                 allAreas.push({
                     "id": value.properties.URBAN_AREA_GUID,
+                    // "id": value.properties.code,
                     "text": value.properties.URBAN_AREA_NAME + " (" + value.properties.COUNTY + ")"
+                    //"text": value.properties.en //+ " (" + value.properties.COUNTY + ")"
                 })
             });
 
