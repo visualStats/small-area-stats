@@ -12,7 +12,7 @@
     <script src="https://cdn.jsdelivr.net/npm/@turf/turf@6.3.0/turf.min.js"
         integrity="sha256-61XYRdJcsdgC6tmgA3BaHJX1Y6b1GcPUIKiixSyeBqc=" crossorigin="anonymous"></script>
 
-    <script src="https://cdn.jsdelivr.net/gh/visualStats/PxWidget@1.0.3/js/isogram.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/visualStats/PxWidget@1.0.6/js/isogram.js"></script>
 
     <!-- Select2 updated - https://select2.org/getting-started/installation -->
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
@@ -22,80 +22,63 @@
         integrity="sha256-p83KJSAVJm2EVXl2rAbOsuWHWOMN1WbptMq+BA1BJPY=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/gh/CSOIreland/T4-SDK@2.2.0/t4sdk.library.js" crossorigin="anonymous"></script>
 
+    <script src="https://cdn.jsdelivr.net/gh/Stuk/jszip@3.10.1/dist/jszip.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.8/FileSaver.min.js"
+        crossorigin="anonymous"></script>
+
+
+
+
     <script src="pxwidget.constant.min.js"></script>
     <script src="pxwidget.library.js"></script>
 
     <script>
         $(document).ready(function () {
-            // var dataParent = null;
 
             $.ajax({
-                //"url": "CSO_Urban_Areas_-_National_Statistical_Boundaries_-_2022_-_Ungeneralised.geojson",
-                "url": "CSO_Urban_Areas_-_National_Statistical_Boundaries_-_2022_-_Generalised_20m.geojson",
-                //"url": "https://ws.cso.ie/public/api.static/PxStat.Data.GeoMap_API.Read/01bf8f2912f9795a10c35581cba0dff4",
-                "dataType": "json"
-            }).done(function (responseParent) {
-                $.ajax({
-                    "url": "small_area_20m.geojson",
-                    "dataType": "json"
-                }).done(function (responseSibling) {
-                    allSmallAreas = responseSibling;
-
-                    selectedSmallareas = $.extend(true, {}, allSmallAreas);
+                "url": "urban_areas.json",
+                "dataType": "json",
+                "success": function (result) {
                     $("select[name=select-area]").empty().append($("<option>")).select2({
                         minimumInputLength: 0,
                         allowClear: true,
                         width: '80%',
                         placeholder: "Select an Area",
-                        data: getFeaturesForSelect(responseParent)
+                        data: result
                     }).on('select2:select', function (e) {
                         if ($(this).val()) {
-                            $('[name="results"]').hide();
-                            parseData(responseParent, responseSibling)
+                            fetchSmallAreas();
                         }
                     });
-                });
-
-            });
+                }
+            })
         });
 
-        var allSmallAreas = null;
-        var selectedSmallareas = null;
-        parseData = function (dataParent, dataSibling) {
-            var feature = $.grep(dataParent.features, function (element, index) {
-                return element.properties.URBAN_AREA_GUID == $("select[name=select-area]").val();
-                //return element.properties.code == $("select[name=select-area]").val();
+        fetchSmallAreas = function () {
+            $.ajax({
+                "url": "/small_area_geojson/" + $("select[name=select-area]").val() + ".geojson",
+                "dataType": "json",
+                "success": function (result) {
+                    var guidsInParent = [];
 
-            });
+                    $.each(result.features, function (index, value) {
+                        guidsInParent.push(value.properties.code)
+                    });
+                    $('[name="results"]').show();
 
-            selectedSmallareas.features = [];
-            var guidsInParent = [];
+                    renderPopulationMap(guidsInParent);
+                    renderHouseMap(guidsInParent);
+                    renderSmokingMap(guidsInParent);
 
-            $.each(dataSibling.features, function (index, value) {
-                if (turf.intersect(feature[0].geometry, value.geometry)) {
-                    var properties = {
-                        "code": value.properties.SA_GUID_2022,
-                        "label": value.properties.SA_PUB2022
-                    }
-                    value.properties = properties;
-                    selectedSmallareas.features.push(value);
-                    guidsInParent.push(properties.code);
+                    $('[name="town"]').text($("select[name=select-area]  option:selected").text());
+
                 }
-
-            });
-
-            renderPopulationMap(guidsInParent);
-            renderHouseMap(guidsInParent);
-            renderSmokingMap(guidsInParent);
-            $('[name="town"]').text($("select[name=select-area]  option:selected").text());
-            $('[name="results"]').show();
-        };
+            })
+        }
 
         renderPopulationMap = function (guids) {
-            $('[name="results"]').show();
             var config = {
                 "autoupdate": true,
-                "geojson": selectedSmallareas,
                 "matrix": null,
                 "mapDimension": "C04172V04943",
                 "copyright": true,
@@ -190,7 +173,8 @@
                     }
                 },
                 "options": {
-                    "mode": "q"
+                    "mode": "q",
+                    "geojson": "/small_area_geojson/" + $("select[name=select-area]").val() + ".geojson"
                 },
                 "baseMap": {
                     "leaflet": [],
@@ -219,7 +203,6 @@
         renderHouseMap = function (guids,) {
             var config = {
                 "autoupdate": true,
-                "geojson": selectedSmallareas,
                 "matrix": null,
                 "mapDimension": "C04172V04943",
                 "copyright": true,
@@ -309,7 +292,8 @@
                     }
                 },
                 "options": {
-                    "mode": "q"
+                    "mode": "q",
+                    "geojson": "/small_area_geojson/" + $("select[name=select-area]").val() + ".geojson"
                 },
                 "baseMap": {
                     "leaflet": [],
@@ -339,7 +323,6 @@
         renderSmokingMap = function (guids) {
             var config = {
                 "autoupdate": true,
-                "geojson": selectedSmallareas,
                 "matrix": null,
                 "mapDimension": "C04172V04943",
                 "copyright": true,
@@ -447,7 +430,8 @@
                     }
                 },
                 "options": {
-                    "mode": "q"
+                    "mode": "q",
+                    "geojson": "/small_area_geojson/" + $("select[name=select-area]").val() + ".geojson"
                 },
                 "baseMap": {
                     "leaflet": [
@@ -475,36 +459,6 @@
             //pxWidget.draw.init('map', 'map', config)
 
         }
-
-
-        getFeaturesForSelect = function (geoJson) {
-            var allAreas = [];
-            $.each(geoJson.features, function (index, value) {
-                allAreas.push({
-                    "id": value.properties.URBAN_AREA_GUID,
-                    // "id": value.properties.code,
-                    "text": value.properties.URBAN_AREA_NAME + " (" + value.properties.COUNTY + ")"
-                    //"text": value.properties.en //+ " (" + value.properties.COUNTY + ")"
-                })
-            });
-
-            // sort by name
-            allAreas.sort(function (a, b) {
-                var textA = a.text.toUpperCase(); // ignore upper and lowercase
-                var textB = b.text.toUpperCase(); // ignore upper and lowercase
-                if (textA < textB) {
-                    return -1;
-                }
-                if (textA > textB) {
-                    return 1;
-                }
-
-                // names must be equal
-                return 0;
-            });
-
-            return allAreas;
-        };
 
     </script>
 </head>
