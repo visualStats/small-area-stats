@@ -56,7 +56,7 @@
 
         fetchSmallAreas = function () {
             $.ajax({
-                "url": "/small_area_geojson/" + $("select[name=select-area]").val() + ".geojson",
+                "url": "/small-area-stats/small_area_geojson/" + $("select[name=select-area]").val() + ".geojson",
                 "dataType": "json",
                 "success": function (result) {
                     var guidsInParent = [];
@@ -174,7 +174,7 @@
                 },
                 "options": {
                     "mode": "q",
-                    "geojson": "/small_area_geojson/" + $("select[name=select-area]").val() + ".geojson"
+                    "geojson": "/small-area-stats/small_area_geojson/" + $("select[name=select-area]").val() + ".geojson"
                 },
                 "baseMap": {
                     "leaflet": [],
@@ -293,7 +293,7 @@
                 },
                 "options": {
                     "mode": "q",
-                    "geojson": "/small_area_geojson/" + $("select[name=select-area]").val() + ".geojson"
+                    "geojson": "/small-area-stats/small_area_geojson/" + $("select[name=select-area]").val() + ".geojson"
                 },
                 "baseMap": {
                     "leaflet": [],
@@ -431,7 +431,7 @@
                 },
                 "options": {
                     "mode": "q",
-                    "geojson": "/small_area_geojson/" + $("select[name=select-area]").val() + ".geojson"
+                    "geojson": "/small-area-stats/small_area_geojson/" + $("select[name=select-area]").val() + ".geojson"
                 },
                 "baseMap": {
                     "leaflet": [
