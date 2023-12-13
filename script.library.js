@@ -196,6 +196,7 @@ renderPopulationMap = function (guids) {
         $.getJSON("https://ws.cso.ie/public/api.jsonrpc?data=" + JSON.stringify(totalConfig), function (result) {
             var total = t4Sdk.dataConnector.parseSingleValue(result.result);
             $("#population-data-total").text(total.value);
+            $("#population-data-total-label").text($("#population-widget-wrapper select option:selected").text());
         });
     });
 
@@ -371,6 +372,8 @@ renderHouseMap = function (guids,) {
         $.getJSON("https://ws.cso.ie/public/api.jsonrpc?data=" + JSON.stringify(totalConfig), function (result) {
             var total = t4Sdk.dataConnector.parseSingleValue(result.result);
             $("#house-data-total").text(total.value);
+            $("#house-data-total-label").text($("#house-widget-wrapper select option:selected").text());
+
         });
     });
 
@@ -423,7 +426,7 @@ renderSmokingMap = function (guids) {
         "mapDimension": "C04172V04943",
         "copyright": true,
         "link": "https://data.cso.ie/table/SAP2022T12T4SA",
-        "title": "Persons who smoke",
+        "title": null,
         "borders": true,
         "colorScale": "red",
         "tooltipTitle": null,
@@ -558,6 +561,7 @@ renderSmokingMap = function (guids) {
         $.getJSON("https://ws.cso.ie/public/api.jsonrpc?data=" + JSON.stringify(totalConfig), function (result) {
             var total = t4Sdk.dataConnector.parseSingleValue(result.result);
             $("#smoking-data-total").text(total.value);
+            $("#smoking-data-total-label").text($("#smoking-widget-wrapper select option:selected").text());
         });
     });
 
@@ -618,7 +622,7 @@ renderOccupationsMap = function (guids) {
         "mapDimension": "C04172V04943",
         "copyright": true,
         "link": "https://data.cso.ie/table/SAP2022T13T1SA",
-        "title": "Persons at work or unemployed",
+        "title": null,
         "borders": true,
         "colorScale": "red",
         "tooltipTitle": null,
@@ -760,6 +764,8 @@ renderOccupationsMap = function (guids) {
         $.getJSON("https://ws.cso.ie/public/api.jsonrpc?data=" + JSON.stringify(totalConfig), function (result) {
             var total = t4Sdk.dataConnector.parseSingleValue(result.result);
             $("#occupations-data-total").text(total.value);
+            $("#occupations-data-total-label").text($("#occupations-widget-wrapper select option:selected").text());
+
         });
     });
 
