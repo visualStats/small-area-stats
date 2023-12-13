@@ -192,8 +192,9 @@ renderPopulationMap = function (guids) {
     );
 
     $("#population-widget-wrapper select").on("change", function () {
-        totalConfig.params.dimension.C03737V04485.category.index = [$(this).val()];
-        $.getJSON("https://ws.cso.ie/public/api.jsonrpc?data=" + JSON.stringify(totalConfig), function (result) {
+        var clonedConfig = $.extend(true, {}, totalConfig);
+        clonedConfig.params.dimension.C03737V04485.category.index = [$(this).val()]
+        $.getJSON("https://ws.cso.ie/public/api.jsonrpc?data=" + JSON.stringify(clonedConfig), function (result) {
             var total = t4Sdk.dataConnector.parseSingleValue(result.result);
             $("#population-data-total").text(total.value);
         });
