@@ -188,7 +188,7 @@ renderPopulationMap = function (guids) {
         "dropdown",
         "C03737V04485",
         null,
-        "AGET"
+        null
     );
 
     $("#population-widget-wrapper select").on("change", function () {
@@ -748,6 +748,7 @@ renderOccupationsMap = function (guids) {
             ]
         }
     };
+
     t4Sdk.pxWidget.create(
         "map",
         "occupations-widget-wrapper",
