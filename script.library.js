@@ -43,9 +43,7 @@ renderPopulationMap = function (guids) {
                 },
                 "C03737V04485": {
                     "category": {
-                        "index": [
-                            "AGE2"
-                        ]
+                        "index": []
                     }
                 },
                 "C03738V04487": {
@@ -66,7 +64,7 @@ renderPopulationMap = function (guids) {
                     "type": "JSON-stat",
                     "version": "2.0"
                 },
-                "matrix": "SAP2022T1T1TOWN22"
+                "matrix": "SAP2022T1T1ATOWN22"
             },
             "version": "2.0"
         }
