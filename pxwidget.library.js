@@ -123,7 +123,7 @@ t4Sdk.pxWidget.create = function (type, elementId, isLive, snippet, toggleType, 
         $("<div>", {
             "class": "widget-toggle-panel",
             "html": $("<div>", {
-                "class": "widget-toggle-input-group"
+                "class": "widget-toggle-input-group mb-3"
             }).get(0).outerHTML
         }).get(0).outerHTML
     );
@@ -135,7 +135,7 @@ t4Sdk.pxWidget.create = function (type, elementId, isLive, snippet, toggleType, 
                     "class": "widget-toggle-input-group-prepend",
                     "html": $("<label>", {
                         "name": "toggle-select-label",
-                        "class": "widget-toggle-input-group-text",
+                        "class": "form-label",
                         "for": "#" + elementId + "-toggle-select"
                     }).get(0).outerHTML
                 }).get(0).outerHTML
@@ -149,7 +149,8 @@ t4Sdk.pxWidget.create = function (type, elementId, isLive, snippet, toggleType, 
                 }).get(0).outerHTML
             );
             $("#" + elementId + " .widget-toggle-input-group [name=toggle-select]").select2({
-                width: '80%'
+                width: '80%',
+                theme: 'bootstrap-5'
             });
         case "buttons":
             $("#" + elementId + " .widget-toggle-input-group").append(
@@ -274,7 +275,7 @@ t4Sdk.pxWidget.create = function (type, elementId, isLive, snippet, toggleType, 
             //set toggle dimension label
             switch (toggleType) {
                 case "dropdown":
-                    $("#" + elementId).find("[name=toggle-select-label]").text(toggleVariablesDetails.label + ": ");
+                    $("#" + elementId).find("[name=toggle-select-label]").text(toggleVariablesDetails.label);
                 case "buttons":
                     //no label required
                     break;
