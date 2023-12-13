@@ -75,6 +75,7 @@
                     renderPopulationMap(guidsInParent);
                     renderHouseMap(guidsInParent);
                     renderSmokingMap(guidsInParent);
+                    renderOccupationsMap(guidsInParent);
 
                     $('[name="town"]').text($("select[name=select-area]  option:selected").text());
 
@@ -624,6 +625,208 @@
                 });
             });
 
+        };
+
+        renderOccupationsMap = function (guids) {
+
+            var totalConfig = {
+                "jsonrpc": "2.0",
+                "method": "PxStat.Data.Cube_API.ReadDataset",
+                "params": {
+                    "class": "query",
+                    "id": [
+                        "C03738V04487",
+                        "C03773V04522",
+                        "C04160V04929"
+                    ],
+                    "dimension": {
+                        "C03738V04487": {
+                            "category": {
+                                "index": [
+                                    "B"
+                                ]
+                            }
+                        },
+                        "C03773V04522": {
+                            "category": {
+                                "index": []
+                            }
+                        },
+                        "C04160V04929": {
+                            "category": {
+                                "index": [
+                                    $("select[name=select-area]").val()
+                                ]
+                            }
+                        }
+                    },
+                    "extension": {
+                        "pivot": null,
+                        "codes": false,
+                        "language": {
+                            "code": "en"
+                        },
+                        "format": {
+                            "type": "JSON-stat",
+                            "version": "2.0"
+                        },
+                        "matrix": "SAP2022T13T1TOWN22"
+                    },
+                    "version": "2.0"
+                }
+            };
+
+            var mapConfig = {
+                "autoupdate": true,
+                "matrix": null,
+                "mapDimension": "C04172V04943",
+                "copyright": true,
+                "link": "https://data.cso.ie/table/SAP2022T13T1SA",
+                "title": "Persons at work or unemployed",
+                "borders": true,
+                "colorScale": "red",
+                "tooltipTitle": null,
+                "defaultContent": "..",
+                "fullScreen": {
+                    "title": "View Fullscreen",
+                    "titleCancel": "Exit Fullscreen"
+                },
+                "data": {
+                    "datasets": [
+                        {
+                            "api": {
+                                "query": {
+                                    "url": "https://ws.cso.ie/public/api.jsonrpc",
+                                    "data": {
+                                        "jsonrpc": "2.0",
+                                        "method": "PxStat.Data.Cube_API.ReadDataset",
+                                        "params": {
+                                            "class": "query",
+                                            "id": [
+                                                "STATISTIC",
+                                                "TLIST(A1)",
+                                                "C03738V04487",
+                                                "C03773V04522",
+                                                "C04172V04943"
+                                            ],
+                                            "dimension": {
+                                                "STATISTIC": {
+                                                    "category": {
+                                                        "index": [
+                                                            "SAP2022T13T1C01"
+                                                        ]
+                                                    }
+                                                },
+                                                "TLIST(A1)": {
+                                                    "category": {
+                                                        "index": [
+                                                            "2022"
+                                                        ]
+                                                    }
+                                                },
+                                                "C03738V04487": {
+                                                    "category": {
+                                                        "index": [
+                                                            "B"
+                                                        ]
+                                                    }
+                                                },
+                                                "C03773V04522": {
+                                                    "category": {
+                                                        "index": [
+                                                            "MDSO"
+                                                        ]
+                                                    }
+                                                },
+                                                "C04172V04943": {
+                                                    "category": {
+                                                        "index": guids
+                                                    }
+                                                }
+                                            },
+                                            "extension": {
+                                                "language": {
+                                                    "code": "en"
+                                                },
+                                                "format": {
+                                                    "type": "JSON-stat",
+                                                    "version": "2.0"
+                                                },
+                                                "matrix": "SAP2022T13T1SA"
+                                            },
+                                            "version": "2.0",
+                                            "m2m": false
+                                        }
+                                    }
+                                },
+                                "response": {
+
+                                }
+                            },
+                            "fluidTime": [
+                                0
+                            ]
+                        }
+                    ]
+                },
+                "metadata": {
+                    "api": {
+                        "query": {
+                            "url": "https://ws.cso.ie/public/api.jsonrpc",
+                            "data": {
+                                "jsonrpc": "2.0",
+                                "method": "PxStat.Data.Cube_API.ReadMetadata",
+                                "params": {
+                                    "matrix": "SAP2022T13T1SA",
+                                    "language": "en",
+                                    "format": {
+                                        "type": "JSON-stat",
+                                        "version": "2.0"
+                                    }
+                                },
+                                "version": "2.0"
+                            }
+                        },
+                        "response": {
+
+                        }
+                    }
+                },
+                "options": {
+                    "mode": "q",
+                    "geojson": "https://cdn.jsdelivr.net/gh/visualStats/small-area-stats/small_area_geojson/" + $("select[name=select-area]").val() + ".geojson"
+                },
+                "baseMap": {
+                    "leaflet": [
+
+                    ],
+                    "esri": [
+                        {
+                            "url": "https://utility.arcgis.com/usrsvcs/servers/88f1db9e4ae04df69e499223b8295843/rest/services/MapGeniePremiumWM/MapServer",
+                            "disclaimer": "You can use the OSi basemap layer only in conjunction with the CSO map widgets, all other rights are reserved by OSi."
+                        }
+                    ]
+                }
+            };
+            t4Sdk.pxWidget.create(
+                "map",
+                "occupations-widget-wrapper",
+                true,
+                mapConfig,
+                "dropdown",
+                "C03773V04522",
+                null,
+                null
+            );
+
+            $("#occupations-widget-wrapper select").on("change", function () {
+                totalConfig.params.dimension.C03773V04522.category.index = [$(this).val()];
+                $.getJSON("https://ws.cso.ie/public/api.jsonrpc?data=" + JSON.stringify(totalConfig), function (result) {
+                    var total = t4Sdk.dataConnector.parseSingleValue(result.result);
+                    $("#occupations-data-total").text(total.value);
+                });
+            });
+
         }
 
     </script>
@@ -662,6 +865,14 @@
                 <h4 class="card-title"><span name="town"></span>: Persons who smoke (Total: <span
                         id="smoking-data-total"></span>)</h4>
                 <div id="smoking-widget-wrapper" class="widget-toggle-wrapper"></div>
+            </div>
+        </div>
+
+        <div name="results" class="card my-2" style="display: none;">
+            <div class="card-body">
+                <h4 class="card-title"><span name="town"></span>: Occupations (Total: <span
+                        id="occupations-data-total"></span>)</h4>
+                <div id="occupations-widget-wrapper" class="widget-toggle-wrapper"></div>
             </div>
         </div>
     </div>
