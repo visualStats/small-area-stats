@@ -14,6 +14,10 @@ $(document).ready(function () {
                 if ($(this).val()) {
                     $("#theme-accordion").hide();
                     $('#theme-accordion').collapse("hide");
+                    $("#theme-accordion").find(".widget-toggle-wrapper").empty();
+                    $('[name="town"]').empty();
+                    $('[name="data-total"]').empty();
+                    $('[name="data-total-label"]').empty();
                     fetchSmallAreas();
                 }
             });
@@ -24,24 +28,24 @@ $(document).ready(function () {
         switch (e.target.attributes.id.value) {
             case "populationCollapse":
                 if ($("#populationCollapse .widget-toggle-wrapper").first().is(':empty')) {
-                    renderPopulationSexMap(guidsInParent);
-                    renderPopulationAgeMap(guidsInParent);
-                    renderPopulationMartialStatusMap(guidsInParent);
+                    renderPopulationSexMap(smallAreaGuids);
+                    renderPopulationAgeMap(smallAreaGuids);
+                    renderPopulationMartialStatusMap(smallAreaGuids);
                 }
                 break;
             case "housingCollapse":
                 if ($("#housingCollapse .widget-toggle-wrapper").first().is(':empty')) {
-                    renderHouseMap(guidsInParent);
+                    renderHouseMap(smallAreaGuids);
                 }
                 break;
             case "healthCollapse":
                 if ($("#healthCollapse .widget-toggle-wrapper").first().is(':empty')) {
-                    renderSmokingMap(guidsInParent);
+                    renderSmokingMap(smallAreaGuids);
                 }
                 break;
             case "occupationsCollapse":
                 if ($("#occupationsCollapse .widget-toggle-wrapper").first().is(':empty')) {
-                    renderOccupationsMap(guidsInParent);
+                    renderOccupationsMap(smallAreaGuids);
                 };
                 break;
             default:

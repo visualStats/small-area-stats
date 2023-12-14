@@ -1,13 +1,12 @@
-var guidsInParent = [];
+var smallAreaGuids = [];
 fetchSmallAreas = function () {
     $.ajax({
         "url": "https://cdn.jsdelivr.net/gh/visualStats/small-area-stats/small_area_geojson/" + $("select[name=select-area]").val() + ".geojson",
         "dataType": "json",
         "success": function (result) {
-            $("#theme-accordion").find(".widget-toggle-wrapper").empty();
-            guidsInParent = [];
+            smallAreaGuids = [];
             $.each(result.features, function (index, value) {
-                guidsInParent.push(value.properties.code)
+                smallAreaGuids.push(value.properties.code)
             });
             $("#theme-accordion").show();
             $('#theme-accordion .accordion-collapse.collapse.show').collapse('hide');
