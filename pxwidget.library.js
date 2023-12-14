@@ -149,7 +149,7 @@ t4Sdk.pxWidget.create = function (type, elementId, isLive, snippet, toggleType, 
                 }).get(0).outerHTML
             );
             $("#" + elementId + " .widget-toggle-input-group [name=toggle-select]").select2({
-                width: '80%',
+                width: '100%',
                 theme: 'bootstrap-5'
             });
         case "buttons":
