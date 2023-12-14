@@ -21,6 +21,8 @@ $(document).ready(function () {
                     fetchSmallAreas();
                 }
             });
+
+            $("select[name=select-area]").show();
         }
     });
 
