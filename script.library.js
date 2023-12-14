@@ -10,7 +10,9 @@ fetchSmallAreas = function () {
             });
             $('[name="results"]').show();
 
-            renderPopulationMap(guidsInParent);
+            renderPopulationSexMap(guidsInParent);
+            renderPopulationAgeMap(guidsInParent);
+            renderPopulationMartialStatusMap(guidsInParent);
             renderHouseMap(guidsInParent);
             renderSmokingMap(guidsInParent);
             renderOccupationsMap(guidsInParent);
@@ -19,9 +21,188 @@ fetchSmallAreas = function () {
 
         }
     })
-}
+};
 
-renderPopulationMap = function (guids) {
+renderPopulationSexMap = function (guids) {
+
+    var totalConfig = {
+        "jsonrpc": "2.0",
+        "method": "PxStat.Data.Cube_API.ReadDataset",
+        "params": {
+            "class": "query",
+            "id": [
+                "C04160V04929",
+                "C03737V04485",
+                "C03738V04487"
+            ],
+            "dimension": {
+                "C04160V04929": {
+                    "category": {
+                        "index": [
+                            $("select[name=select-area]").val()
+                        ]
+                    }
+                },
+                "C03737V04485": {
+                    "category": {
+                        "index": ["AGET"]
+                    }
+                },
+                "C03738V04487": {
+                    "category": {
+                        "index": []
+                    }
+                }
+            },
+            "extension": {
+                "pivot": null,
+                "codes": false,
+                "language": {
+                    "code": "en"
+                },
+                "format": {
+                    "type": "JSON-stat",
+                    "version": "2.0"
+                },
+                "matrix": "SAP2022T1T1ATOWN22"
+            },
+            "version": "2.0"
+        }
+    };
+
+
+    var mapConfig = {
+        "autoupdate": true,
+        "matrix": null,
+        "mapDimension": "C04172V04943",
+        "copyright": true,
+        "link": "https://data.cso.ie/table/SAP2022T1T1ASA",
+        "title": null,
+        "borders": true,
+        "colorScale": "red",
+        "tooltipTitle": null,
+        "defaultContent": "..",
+        "fullScreen": {
+            "title": "View Fullscreen",
+            "titleCancel": "Exit Fullscreen"
+        },
+        "data": {
+            "datasets": [{
+                "api": {
+                    "query": {
+                        "url": "https://ws.cso.ie/public/api.jsonrpc",
+                        "data": {
+                            "jsonrpc": "2.0",
+                            "method": "PxStat.Data.Cube_API.ReadDataset",
+                            "params": {
+                                "class": "query",
+                                "id": ["STATISTIC", "TLIST(A1)", "C04172V04943", "C03737V04485", "C03738V04487"],
+                                "dimension": {
+                                    "STATISTIC": {
+                                        "category": {
+                                            "index": ["SAP2022T1T1C01"]
+                                        }
+                                    },
+                                    "TLIST(A1)": {
+                                        "category": {
+                                            "index": ["2022"]
+                                        }
+                                    },
+                                    "C04172V04943": {
+                                        "category": {
+                                            "index": guids
+                                        }
+                                    },
+                                    "C03737V04485": {
+                                        "category": {
+                                            "index": ["AGET"]
+                                        }
+                                    },
+                                    "C03738V04487": {
+                                        "category": {
+                                            "index": []
+                                        }
+                                    }
+                                },
+                                "extension": {
+                                    "language": {
+                                        "code": "en"
+                                    },
+                                    "format": {
+                                        "type": "JSON-stat",
+                                        "version": "2.0"
+                                    },
+                                    "matrix": "SAP2022T1T1ASA"
+                                },
+                                "version": "2.0",
+                                "m2m": false
+                            }
+                        }
+                    },
+                    "response": {}
+                },
+                "fluidTime": [0]
+            }
+            ]
+        },
+        "metadata": {
+            "api": {
+                "query": {
+                    "url": "https://ws.cso.ie/public/api.jsonrpc",
+                    "data": {
+                        "jsonrpc": "2.0",
+                        "method": "PxStat.Data.Cube_API.ReadMetadata",
+                        "params": {
+                            "matrix": "SAP2022T1T1ASA",
+                            "language": "en",
+                            "format": {
+                                "type": "JSON-stat",
+                                "version": "2.0"
+                            }
+                        },
+                        "version": "2.0"
+                    }
+                },
+                "response": {}
+            }
+        },
+        "options": {
+            "mode": "q",
+            "geojson": "https://cdn.jsdelivr.net/gh/visualStats/small-area-stats/small_area_geojson/" + $("select[name=select-area]").val() + ".geojson"
+        },
+        "baseMap": {
+            "leaflet": [],
+            "esri": [{
+                "url": "https://utility.arcgis.com/usrsvcs/servers/88f1db9e4ae04df69e499223b8295843/rest/services/MapGeniePremiumWM/MapServer",
+                "disclaimer": "You can use the OSi basemap layer only in conjunction with the CSO map widgets, all other rights are reserved by OSi."
+            }
+            ]
+        }
+    };
+
+    t4Sdk.pxWidget.create(
+        "map",
+        "population-sex-widget-wrapper",
+        true,
+        mapConfig,
+        "dropdown",
+        "C03738V04487",
+        null,
+        "B"
+    );
+
+    $("#population-card-sex-wrapper select").on("change", function () {
+        totalConfig.params.dimension.C03738V04487.category.index = [$(this).val()]
+        $.getJSON("https://ws.cso.ie/public/api.jsonrpc?data=" + JSON.stringify(totalConfig), function (result) {
+            var total = t4Sdk.dataConnector.parseSingleValue(result.result);
+            $("#population-card-sex-wrapper").find('[name="data-total"]').text(total.value);
+            $("#population-card-sex-wrapper").find('[name="data-total-label"]').text($("#population-card-sex-wrapper select option:selected").text());
+        });
+    });
+
+};
+
+renderPopulationAgeMap = function (guids) {
 
     var totalConfig = {
         "jsonrpc": "2.0",
@@ -115,7 +296,7 @@ renderPopulationMap = function (guids) {
                                     },
                                     "C03737V04485": {
                                         "category": {
-                                            "index": ["AGET"]
+                                            "index": []
                                         }
                                     },
                                     "C03738V04487": {
@@ -182,7 +363,7 @@ renderPopulationMap = function (guids) {
 
     t4Sdk.pxWidget.create(
         "map",
-        "population-widget-wrapper",
+        "population-age-widget-wrapper",
         true,
         mapConfig,
         "dropdown",
@@ -191,12 +372,202 @@ renderPopulationMap = function (guids) {
         null
     );
 
-    $("#population-widget-wrapper select").on("change", function () {
+    $("#population-card-age-wrapper select").on("change", function () {
         totalConfig.params.dimension.C03737V04485.category.index = [$(this).val()]
         $.getJSON("https://ws.cso.ie/public/api.jsonrpc?data=" + JSON.stringify(totalConfig), function (result) {
             var total = t4Sdk.dataConnector.parseSingleValue(result.result);
-            $("#population-data-total").text(total.value);
-            $("#population-data-total-label").text($("#population-widget-wrapper select option:selected").text());
+            $("#population-card-age-wrapper").find('[name="data-total"]').text(total.value);
+            $("#population-card-age-wrapper").find('[name="data-total-label"]').text($("#population-card-age-wrapper select option:selected").text());
+        });
+    });
+
+};
+
+renderPopulationMartialStatusMap = function (guids) {
+
+    var totalConfig = {
+        "jsonrpc": "2.0",
+        "method": "PxStat.Data.Cube_API.ReadDataset",
+        "params": {
+            "class": "query",
+            "id": [
+                "C04160V04929",
+                "C03739V04488",
+                "C03738V04487"
+            ],
+            "dimension": {
+                "C04160V04929": {
+                    "category": {
+                        "index": [
+                            $("select[name=select-area]").val()
+                        ]
+                    }
+                },
+                "C03739V04488": {
+                    "category": {
+                        "index": []
+                    }
+                },
+                "C03738V04487": {
+                    "category": {
+                        "index": [
+                            "B"
+                        ]
+                    }
+                }
+            },
+            "extension": {
+                "pivot": null,
+                "codes": false,
+                "language": {
+                    "code": "en"
+                },
+                "format": {
+                    "type": "JSON-stat",
+                    "version": "2.0"
+                },
+                "matrix": "SAP2022T1T2TOWN22"
+            },
+            "version": "2.0"
+        }
+    };
+
+
+    var mapConfig = {
+        "autoupdate": true,
+        "matrix": null,
+        "mapDimension": "C04172V04943",
+        "copyright": true,
+        "link": "https://data.cso.ie/table/SAP2022T1T2SA",
+        "title": null,
+        "borders": true,
+        "colorScale": "red",
+        "tooltipTitle": null,
+        "defaultContent": "..",
+        "fullScreen": {
+            "title": "View Fullscreen",
+            "titleCancel": "Exit Fullscreen"
+        },
+        "data": {
+            "datasets": [
+                {
+                    "api": {
+                        "query": {
+                            "url": "https://ws.cso.ie/public/api.jsonrpc",
+                            "data": {
+                                "jsonrpc": "2.0",
+                                "method": "PxStat.Data.Cube_API.ReadDataset",
+                                "params": {
+                                    "class": "query",
+                                    "id": [
+                                        "STATISTIC",
+                                        "TLIST(A1)",
+                                        "C04172V04943",
+                                        "C03739V04488",
+                                        "C03738V04487"
+                                    ],
+                                    "dimension": {
+                                        "STATISTIC": {
+                                            "category": {
+                                                "index": [
+                                                    "SAP2022T1T2C01"
+                                                ]
+                                            }
+                                        },
+                                        "TLIST(A1)": {
+                                            "category": {
+                                                "index": [
+                                                    "2022"
+                                                ]
+                                            }
+                                        },
+                                        "C04172V04943": {
+                                            "category": {
+                                                "index": guids
+                                            }
+                                        },
+                                        "C03739V04488": {
+                                            "category": {
+                                                "index": []
+                                            }
+                                        },
+                                        "C03738V04487": {
+                                            "category": {
+                                                "index": [
+                                                    "B"
+                                                ]
+                                            }
+                                        }
+                                    },
+                                    "extension": {
+                                        "language": {
+                                            "code": "en"
+                                        },
+                                        "format": {
+                                            "type": "JSON-stat",
+                                            "version": "2.0"
+                                        },
+                                        "matrix": "SAP2022T1T2SA"
+                                    },
+                                    "version": "2.0",
+                                    "m2m": false
+                                }
+                            }
+                        },
+                        "response": {
+
+                        }
+                    },
+                    "fluidTime": [
+
+                    ]
+                }
+            ]
+        },
+        "metadata": {
+            "api": {
+                "query": {
+
+                },
+                "response": {
+
+                }
+            }
+        },
+        "options": {
+            "mode": "q",
+            "geojson": "https://cdn.jsdelivr.net/gh/visualStats/small-area-stats/small_area_geojson/" + $("select[name=select-area]").val() + ".geojson"
+        },
+        "baseMap": {
+            "leaflet": [
+
+            ],
+            "esri": [
+                {
+                    "url": "https://utility.arcgis.com/usrsvcs/servers/88f1db9e4ae04df69e499223b8295843/rest/services/MapGeniePremiumWM/MapServer",
+                    "disclaimer": "You can use the OSi basemap layer only in conjunction with the CSO map widgets, all other rights are reserved by OSi."
+                }
+            ]
+        }
+    };
+
+    t4Sdk.pxWidget.create(
+        "map",
+        "population-martial-status-widget-wrapper",
+        true,
+        mapConfig,
+        "dropdown",
+        "C03739V04488",
+        null,
+        null
+    );
+
+    $("#population-card-martial-status-wrapper select").on("change", function () {
+        totalConfig.params.dimension.C03739V04488.category.index = [$(this).val()]
+        $.getJSON("https://ws.cso.ie/public/api.jsonrpc?data=" + JSON.stringify(totalConfig), function (result) {
+            var total = t4Sdk.dataConnector.parseSingleValue(result.result);
+            $("#population-card-martial-status-wrapper").find('[name="data-total"]').text(total.value);
+            $("#population-card-martial-status-wrapper").find('[name="data-total-label"]').text($("#population-card-martial-status-wrapper select option:selected").text());
         });
     });
 
@@ -367,17 +738,16 @@ renderHouseMap = function (guids,) {
         null
     );
 
-    $("#house-widget-wrapper select").on("change", function () {
+    $("#house-card-wrapper select").on("change", function () {
         totalConfig.params.dimension.C03782V04531.category.index = [$(this).val()];
         $.getJSON("https://ws.cso.ie/public/api.jsonrpc?data=" + JSON.stringify(totalConfig), function (result) {
             var total = t4Sdk.dataConnector.parseSingleValue(result.result);
-            $("#house-data-total").text(total.value);
-            $("#house-data-total-label").text($("#house-widget-wrapper select option:selected").text());
-
+            $("#house-card-wrapper").find('[name="data-total"]').text(total.value);
+            $("#house-card-wrapper").find('[name="data-total-label"]').text($("#house-card-wrapper select option:selected").text());
         });
     });
 
-}
+};
 
 renderSmokingMap = function (guids) {
 
@@ -556,12 +926,12 @@ renderSmokingMap = function (guids) {
         null
     );
 
-    $("#smoking-widget-wrapper select").on("change", function () {
+    $("#smoking-card-age-wrapper select").on("change", function () {
         totalConfig.params.dimension.C04096V04858.category.index = [$(this).val()];
         $.getJSON("https://ws.cso.ie/public/api.jsonrpc?data=" + JSON.stringify(totalConfig), function (result) {
             var total = t4Sdk.dataConnector.parseSingleValue(result.result);
-            $("#smoking-data-total").text(total.value);
-            $("#smoking-data-total-label").text($("#smoking-widget-wrapper select option:selected").text());
+            $("#smoking-card-age-wrapper").find('[name="data-total"]').text(total.value);
+            $("#smoking-card-age-wrapper").find('[name="data-total-label"]').text($("#smoking-card-age-wrapper select option:selected").text());
         });
     });
 
@@ -760,13 +1130,12 @@ renderOccupationsMap = function (guids) {
         null
     );
 
-    $("#occupations-widget-wrapper select").on("change", function () {
+    $("#occupations-card-age-wrapper select").on("change", function () {
         totalConfig.params.dimension.C03773V04522.category.index = [$(this).val()];
         $.getJSON("https://ws.cso.ie/public/api.jsonrpc?data=" + JSON.stringify(totalConfig), function (result) {
             var total = t4Sdk.dataConnector.parseSingleValue(result.result);
-            $("#occupations-data-total").text(total.value);
-            $("#occupations-data-total-label").text($("#occupations-widget-wrapper select option:selected").text());
-
+            $("#occupations-card-age-wrapper").find('[name="data-total"]').text(total.value);
+            $("#occupations-card-age-wrapper").find('[name="data-total-label"]').text($("#occupations-card-age-wrapper select option:selected").text());
         });
     });
 
