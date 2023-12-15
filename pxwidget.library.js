@@ -1,5 +1,5 @@
 //#region Add Namespace
-t4Sdk = t4Sdk || {};
+var t4Sdk = {};
 t4Sdk.pxWidget = {};
 t4Sdk.pxWidget.chart = {};
 t4Sdk.pxWidget.table = {};
