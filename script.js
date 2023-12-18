@@ -8,7 +8,7 @@ $(document).ready(function () {
                 theme: 'bootstrap-5',
                 minimumInputLength: 0,
                 width: '100%',
-                placeholder: "Select a Town or Urban Area",
+                placeholder: "Select a Town/Urban Area",
                 data: result
             }).on('select2:select', function (e) {
                 if ($(this).val()) {
