@@ -8,7 +8,8 @@ fetchSmallAreas = function () {
             $.each(result.features, function (index, value) {
                 smallAreaGuids.push(value.properties.code)
             });
-            $("#theme-accordion").show();
+            $("#results-wrapper").find('[name="number-small-areas"]').text(smallAreaGuids.length.toLocaleString());
+            $("#results-wrapper").show();
             $('#theme-accordion .accordion-collapse.collapse.show').collapse('hide');
             $('[name="town"]').text($("select[name=select-area]  option:selected").text());
         }

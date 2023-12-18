@@ -12,7 +12,7 @@ $(document).ready(function () {
                 data: result
             }).on('select2:select', function (e) {
                 if ($(this).val()) {
-                    $("#theme-accordion").hide();
+                    $("#results-wrapper").hide();
                     $('#theme-accordion').collapse("hide");
                     $("#theme-accordion").find(".widget-toggle-wrapper").empty();
                     $('[name="town"]').empty();

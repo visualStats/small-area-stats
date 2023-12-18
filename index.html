@@ -34,96 +34,81 @@
     <script src="script.library.js"></script>
     <script src="script.js"></script>
 
+    <title>Census 2022 Urban Areas Data by Small Areas</title>
 </head>
 
 <body>
-
-
     <div class="container mt-2">
         <h2>Census 2022 Urban Areas Data by Small Areas</h2>
         <select class="my-4" name="select-area" style="display: none;"></select>
-        <div class="accordion mt-3 mb-4" id="theme-accordion" name="results" style="display: none;">
-            <div class="accordion-item">
-                <h2 class="accordion-header" id="headingOne">
-                    <button name="population-open" class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#populationCollapse" aria-expanded="false" aria-controls="populationCollapse">
-                        Sex, Age and Marital Status
-                    </button>
-                </h2>
-                <div id="populationCollapse" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#theme-accordion">
-                    <div class="accordion-body">
-
-                        <div id="population-card-sex-wrapper">
-
-                            <h4 class="card-title"><span name="town"></span>: Population by Sex (<span name="data-total-label"></span>: <span name="data-total"></span>)</h4>
-                            <div id="population-sex-widget-wrapper" class="widget-toggle-wrapper"></div>
-
-                        </div>
-
-                        <div id="population-card-age-wrapper" class="mt-4">
-
-                            <h4 class="card-title"><span name="town"></span>: Population by Age (<span name="data-total-label"></span>: <span name="data-total"></span>)</h4>
-                            <div id="population-age-widget-wrapper" class="widget-toggle-wrapper"></div>
-
-                        </div>
-
-                        <div id="population-card-martial-status-wrapper" class="mt-4">
-
-                            <h4 class="card-title"><span name="town"></span>: Population by Martial Status (<span name="data-total-label"></span>: <span name="data-total"></span>)</h4>
-                            <div id="population-martial-status-widget-wrapper" class="widget-toggle-wrapper"></div>
-
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-            <div class="accordion-item">
-                <h2 class="accordion-header" id="headingTwo">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#housingCollapse" aria-expanded="false" aria-controls="housingCollapse">
-                        Housing
-                    </button>
-                </h2>
-                <div id="housingCollapse" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#theme-accordion">
-                    <div class="accordion-body">
-                        <div id="house-card-wrapper">
-
-                            <h4 class="card-title"><span name="town"></span>: Year house built (<span name="data-total-label"></span>: <span name="data-total"></span>)</h4>
-                            <div id="house-widget-wrapper" class="widget-toggle-wrapper"></div>
-
+        <div id="results-wrapper" style="display: none;">
+            <h6 class="mt-2">No. of small areas : <span name="number-small-areas"></span></h6>
+            <div class="accordion mt-3 mb-4" id="theme-accordion">
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingOne">
+                        <button name="population-open" class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#populationCollapse" aria-expanded="false" aria-controls="populationCollapse">
+                            Sex, Age and Marital Status
+                        </button>
+                    </h2>
+                    <div id="populationCollapse" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#theme-accordion">
+                        <div class="accordion-body">
+                            <div id="population-card-sex-wrapper">
+                                <h4 class="card-title"><span name="town"></span>: Population by Sex (<span name="data-total-label"></span>: <span name="data-total"></span>)</h4>
+                                <div id="population-sex-widget-wrapper" class="widget-toggle-wrapper"></div>
+                            </div>
+                            <div id="population-card-age-wrapper" class="mt-4">
+                                <h4 class="card-title"><span name="town"></span>: Population by Age (<span name="data-total-label"></span>: <span name="data-total"></span>)</h4>
+                                <div id="population-age-widget-wrapper" class="widget-toggle-wrapper"></div>
+                            </div>
+                            <div id="population-card-martial-status-wrapper" class="mt-4">
+                                <h4 class="card-title"><span name="town"></span>: Population by Martial Status (<span name="data-total-label"></span>: <span name="data-total"></span>)</h4>
+                                <div id="population-martial-status-widget-wrapper" class="widget-toggle-wrapper"></div>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="accordion-item">
-                <h2 class="accordion-header" id="headingThree">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#healthCollapse" aria-expanded="false" aria-controls="healthCollapse">
-                        Disability, Carers and General Health
-                    </button>
-                </h2>
-                <div id="healthCollapse" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#theme-accordion">
-                    <div class="accordion-body">
-                        <div id="smoking-card-age-wrapper">
-
-                            <h4 class="card-title"><span name="town"></span>: Persons who smoke (<span name="data-total-label"></span>: <span name="data-total"></span>)</h4>
-                            <div id="smoking-widget-wrapper" class="widget-toggle-wrapper"></div>
-
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingTwo">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#housingCollapse" aria-expanded="false" aria-controls="housingCollapse">
+                            Housing
+                        </button>
+                    </h2>
+                    <div id="housingCollapse" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#theme-accordion">
+                        <div class="accordion-body">
+                            <div id="house-card-wrapper">
+                                <h4 class="card-title"><span name="town"></span>: Year house built (<span name="data-total-label"></span>: <span name="data-total"></span>)</h4>
+                                <div id="house-widget-wrapper" class="widget-toggle-wrapper"></div>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-
-            <div class="accordion-item">
-                <h2 class="accordion-header" id="headingFour">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#occupationsCollapse" aria-expanded="false" aria-controls="occupationsCollapse">
-                        Occupations
-                    </button>
-                </h2>
-                <div id="occupationsCollapse" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#theme-accordion">
-                    <div class="accordion-body">
-                        <div id="occupations-card-age-wrapper">
-
-                            <h4 class="card-title"><span name="town"></span>: Occupations (<span name="data-total-label"></span>: <span name="data-total"></span>)</h4>
-                            <div id="occupations-widget-wrapper" class="widget-toggle-wrapper"></div>
-
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingThree">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#healthCollapse" aria-expanded="false" aria-controls="healthCollapse">
+                            Disability, Carers and General Health
+                        </button>
+                    </h2>
+                    <div id="healthCollapse" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#theme-accordion">
+                        <div class="accordion-body">
+                            <div id="smoking-card-age-wrapper">
+                                <h4 class="card-title"><span name="town"></span>: Persons who smoke (<span name="data-total-label"></span>: <span name="data-total"></span>)</h4>
+                                <div id="smoking-widget-wrapper" class="widget-toggle-wrapper"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingFour">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#occupationsCollapse" aria-expanded="false" aria-controls="occupationsCollapse">
+                            Occupations
+                        </button>
+                    </h2>
+                    <div id="occupationsCollapse" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#theme-accordion">
+                        <div class="accordion-body">
+                            <div id="occupations-card-age-wrapper">
+                                <h4 class="card-title"><span name="town"></span>: Occupations (<span name="data-total-label"></span>: <span name="data-total"></span>)</h4>
+                                <div id="occupations-widget-wrapper" class="widget-toggle-wrapper"></div>
+                            </div>
                         </div>
                     </div>
                 </div>
