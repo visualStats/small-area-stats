@@ -16,7 +16,7 @@ fetchSmallAreas = function () {
     })
 };
 
-renderPopulationSexMap = function (guids) {
+renderPopulationSexMap = function () {
     var mapConfig = {
         "autoupdate": true,
         "matrix": null,
@@ -56,7 +56,7 @@ renderPopulationSexMap = function (guids) {
                                     },
                                     "C04172V04943": {
                                         "category": {
-                                            "index": guids
+                                            "index": smallAreaGuids
                                         }
                                     },
                                     "C03737V04485": {
@@ -113,7 +113,7 @@ renderPopulationSexMap = function (guids) {
             }
         },
         "options": {
-            "mode": "q",
+            "mode": "k",
             "geojson": "https://cdn.jsdelivr.net/gh/visualStats/small-area-stats/small_area_geojson/" + $("select[name=select-area]").val() + ".geojson"
         },
         "baseMap": {
@@ -196,7 +196,7 @@ renderPopulationSexTotal = function () {
     });
 };
 
-renderPopulationAgeMap = function (guids) {
+renderPopulationAgeMap = function () {
 
     var mapConfig = {
         "autoupdate": true,
@@ -237,7 +237,7 @@ renderPopulationAgeMap = function (guids) {
                                     },
                                     "C04172V04943": {
                                         "category": {
-                                            "index": guids
+                                            "index": smallAreaGuids
                                         }
                                     },
                                     "C03737V04485": {
@@ -294,7 +294,7 @@ renderPopulationAgeMap = function (guids) {
             }
         },
         "options": {
-            "mode": "q",
+            "mode": "k",
             "geojson": "https://cdn.jsdelivr.net/gh/visualStats/small-area-stats/small_area_geojson/" + $("select[name=select-area]").val() + ".geojson"
         },
         "baseMap": {
@@ -379,7 +379,7 @@ renderPopulationAgeTotal = function () {
     });
 };
 
-renderPopulationMartialStatusMap = function (guids) {
+renderPopulationMartialStatusMap = function () {
 
     var mapConfig = {
         "autoupdate": true,
@@ -431,7 +431,7 @@ renderPopulationMartialStatusMap = function (guids) {
                                         },
                                         "C04172V04943": {
                                             "category": {
-                                                "index": guids
+                                                "index": smallAreaGuids
                                             }
                                         },
                                         "C03739V04488": {
@@ -483,7 +483,7 @@ renderPopulationMartialStatusMap = function (guids) {
             }
         },
         "options": {
-            "mode": "q",
+            "mode": "k",
             "geojson": "https://cdn.jsdelivr.net/gh/visualStats/small-area-stats/small_area_geojson/" + $("select[name=select-area]").val() + ".geojson"
         },
         "baseMap": {
@@ -571,7 +571,7 @@ renderPopulationMartialStatusTotal = function () {
     });
 };
 
-renderHouseMap = function (guids,) {
+renderHouseMap = function () {
 
     var mapConfig = {
         "autoupdate": true,
@@ -612,7 +612,7 @@ renderHouseMap = function (guids,) {
                                     },
                                     "C04172V04943": {
                                         "category": {
-                                            "index": guids
+                                            "index": smallAreaGuids
                                         }
                                     },
                                     "C03782V04531": {
@@ -664,7 +664,7 @@ renderHouseMap = function (guids,) {
             }
         },
         "options": {
-            "mode": "q",
+            "mode": "k",
             "geojson": "https://cdn.jsdelivr.net/gh/visualStats/small-area-stats/small_area_geojson/" + $("select[name=select-area]").val() + ".geojson"
         },
         "baseMap": {
@@ -749,7 +749,7 @@ renderHouseTotal = function () {
     });
 };
 
-renderSmokingMap = function (guids) {
+renderSmokingMap = function () {
 
     var mapConfig = {
         "autoupdate": true,
@@ -807,7 +807,7 @@ renderSmokingMap = function (guids) {
                                         },
                                         "C04172V04943": {
                                             "category": {
-                                                "index": guids
+                                                "index": smallAreaGuids
                                             }
                                         }
                                     },
@@ -860,7 +860,7 @@ renderSmokingMap = function (guids) {
             }
         },
         "options": {
-            "mode": "q",
+            "mode": "k",
             "geojson": "https://cdn.jsdelivr.net/gh/visualStats/small-area-stats/small_area_geojson/" + $("select[name=select-area]").val() + ".geojson"
         },
         "baseMap": {
@@ -940,7 +940,7 @@ renderSmokingTotal = function () {
     });
 };
 
-renderOccupationsMap = function (guids) {
+renderOccupationsMap = function () {
 
     var mapConfig = {
         "autoupdate": true,
@@ -1006,7 +1006,7 @@ renderOccupationsMap = function (guids) {
                                         },
                                         "C04172V04943": {
                                             "category": {
-                                                "index": guids
+                                                "index": smallAreaGuids
                                             }
                                         }
                                     },
@@ -1059,7 +1059,7 @@ renderOccupationsMap = function (guids) {
             }
         },
         "options": {
-            "mode": "q",
+            "mode": "k",
             "geojson": "https://cdn.jsdelivr.net/gh/visualStats/small-area-stats/small_area_geojson/" + $("select[name=select-area]").val() + ".geojson"
         },
         "baseMap": {

@@ -30,24 +30,24 @@ $(document).ready(function () {
         switch (e.target.attributes.id.value) {
             case "populationCollapse":
                 if ($("#populationCollapse .widget-toggle-wrapper").first().is(':empty')) {
-                    renderPopulationSexMap(smallAreaGuids);
-                    renderPopulationAgeMap(smallAreaGuids);
-                    renderPopulationMartialStatusMap(smallAreaGuids);
+                    renderPopulationSexMap();
+                    renderPopulationAgeMap();
+                    renderPopulationMartialStatusMap();
                 }
                 break;
             case "housingCollapse":
                 if ($("#housingCollapse .widget-toggle-wrapper").first().is(':empty')) {
-                    renderHouseMap(smallAreaGuids);
+                    renderHouseMap();
                 }
                 break;
             case "healthCollapse":
                 if ($("#healthCollapse .widget-toggle-wrapper").first().is(':empty')) {
-                    renderSmokingMap(smallAreaGuids);
+                    renderSmokingMap();
                 }
                 break;
             case "occupationsCollapse":
                 if ($("#occupationsCollapse .widget-toggle-wrapper").first().is(':empty')) {
-                    renderOccupationsMap(smallAreaGuids);
+                    renderOccupationsMap();
                 };
                 break;
             default:
