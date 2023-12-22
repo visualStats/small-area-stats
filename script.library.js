@@ -1,5 +1,5 @@
 var smallAreaGuids = [];
-fetchSmallAreas = function () {
+fetchSmallAreas = function (newArea) {
     $.ajax({
         "url": "https://cdn.jsdelivr.net/gh/visualStats/small-area-stats/small_area_geojson/" + $("select[name=select-area]").val() + ".geojson",
         "dataType": "json",
@@ -8,12 +8,44 @@ fetchSmallAreas = function () {
             $.each(result.features, function (index, value) {
                 smallAreaGuids.push(value.properties.code)
             });
+            $('[name="town"]').empty();
+            $('[name="data-total"]').empty();
+            $('[name="data-total-label"]').empty();
+            $("select[name=theme]").prop('disabled', false).trigger("change");
             $("#results-wrapper").find('[name="number-small-areas"]').text(smallAreaGuids.length.toLocaleString());
-            $("#results-wrapper").show();
-            $('#theme-accordion .accordion-collapse.collapse.show').collapse('hide');
             $('[name="town"]').text($("select[name=select-area]  option:selected").text());
+            $("#results-wrapper").find('[name="title"]').show();
         }
     })
+};
+
+renderData = function () {
+
+    $("#results-wrapper").find(".widget-toggle-wrapper").empty();
+    $("#results-wrapper").find('[name="result-card"]').hide();
+
+    switch ($("select[name=theme]").val()) {
+        case "#population-results":
+            $("#population-results").show();
+            renderPopulationSexMap();
+            renderPopulationAgeMap();
+            renderPopulationMartialStatusMap();
+            break;
+        case "#housing-results":
+            $("#housing-results").show();
+            renderHouseMap();
+            break;
+        case "#health-results":
+            $("#health-results").show();
+            renderSmokingMap();
+            break;
+        case "#occupations-results":
+            $("#occupations-results").show();
+            renderOccupationsMap();
+            break;
+        default:
+            break;
+    }
 };
 
 renderPopulationSexMap = function () {
@@ -138,7 +170,6 @@ renderPopulationSexMap = function () {
     );
 
     $("#population-card-sex-wrapper select").on("change", renderPopulationSexTotal);
-
 };
 
 renderPopulationSexTotal = function () {
@@ -295,7 +326,8 @@ renderPopulationAgeMap = function () {
         },
         "options": {
             "mode": "k",
-            "geojson": "https://cdn.jsdelivr.net/gh/visualStats/small-area-stats/small_area_geojson/" + $("select[name=select-area]").val() + ".geojson"
+            "geojson": "https://cdn.jsdelivr.net/gh/visualStats/small-area-stats/small_area_geojson/" + $("select[name=select-area]").val() + ".geojson",
+            "identifier": "SA_GUID"
         },
         "baseMap": {
             "leaflet": [],
