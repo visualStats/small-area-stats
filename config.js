@@ -2,7 +2,7 @@ var config = {
     "themes": [
         {
             "text": "Sex, Age and Marital Status",
-            "id": "#population-results",
+            "id": "sex_age_marital_status",
             "indicators": [
                 {
                     "title": "Population by Sex",
