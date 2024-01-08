@@ -4,6 +4,7 @@ $(document).ready(function () {
         "url": "https://cdn.jsdelivr.net/gh/visualStats/small-area-stats/urban_areas.json",
         "dataType": "json",
         "success": function (result) {
+            renderThemes();
             $("select[name=select-area]").empty().append($("<option>")).select2({
                 theme: 'bootstrap-5',
                 minimumInputLength: 0,

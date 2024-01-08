@@ -31,6 +31,7 @@
     <script src="pxwidget.library.js"></script>
 
     <!--local js-->
+    <script src="config.js"></script>
     <script src="script.library.js"></script>
     <script src="script.js"></script>
 
@@ -51,10 +52,6 @@
                 <div class="input-group mb-3">
                     <label class="input-group-text" for="inputGroupSelect01">Theme</label>
                     <select name="theme" class="form-select" id="inputGroupSelect01" disabled>
-                        <option value="#population-results">Sex, Age and Marital Status</option>
-                        <option value="#housing-results">Housing</option>
-                        <option value="#health-results">Disability, Carers and General Health</option>
-                        <option value="#occupations-results">Occupations</option>
                     </select>
                 </div>
             </div>
@@ -63,75 +60,17 @@
 
         <div id="results-wrapper">
             <h6 class="mt-2" name="title" style="display: none;"><span name="town"></span> - Number of small areas: <span name="number-small-areas"></span></h6>
+            <div id="indicators-wrapper" name="result-card"></div>
+        </div>
 
-            <div id="population-results" name="result-card" style="display: none;">
-
-                <div id="population-card-sex-wrapper" class="card">
-                    <div class="card-header">
-                        Population by Sex (<span name="data-total-label"></span>: <span name="data-total"></span>)
-                    </div>
-                    <div class="card-body">
-                        <div id="population-sex-widget-wrapper" class="widget-toggle-wrapper"></div>
-                    </div>
+        <div id="templates" style="display: none;">
+            <div name="indicator-card" class="card mb-3">
+                <div class="card-header">
+                    <span name="title"></span> (<span name="data-total-label"></span>: <span name="data-total"></span>)
                 </div>
-
-                <div id="population-card-age-wrapper" class="card mt-2">
-                    <div class="card-header">
-                        Population by Age (<span name="data-total-label"></span>: <span name="data-total"></span>)
-                    </div>
-                    <div class="card-body">
-                        <div id="population-age-widget-wrapper" class="widget-toggle-wrapper"></div>
-                    </div>
+                <div class="card-body">
+                    <div name="widget" class="widget-toggle-wrapper"></div>
                 </div>
-
-                <div id="population-card-martial-status-wrapper" class="card mt-2 mb-2">
-                    <div class="card-header">
-                        Population by Martial Status (<span name="data-total-label"></span>: <span name="data-total"></span>)
-                    </div>
-                    <div class="card-body">
-                        <div id="population-martial-status-widget-wrapper" class="widget-toggle-wrapper"></div>
-                    </div>
-                </div>
-
-            </div>
-
-            <div id="housing-results" name="result-card" style="display: none;">
-
-                <div id="house-card-wrapper" class="card mb-2">
-                    <div class="card-header">
-                        Year house built (<span name="data-total-label"></span>: <span name="data-total"></span>)
-                    </div>
-                    <div class="card-body">
-                        <div id="house-widget-wrapper" class="widget-toggle-wrapper"></div>
-                    </div>
-                </div>
-
-            </div>
-
-            <div id="health-results" name="result-card" style="display: none;">
-
-                <div id="smoking-card-age-wrapper" class="card mb-2">
-                    <div class="card-header">
-                        Smoking (<span name="data-total-label"></span>: <span name="data-total"></span>)
-                    </div>
-                    <div class="card-body">
-                        <div id="smoking-widget-wrapper" class="widget-toggle-wrapper"></div>
-                    </div>
-                </div>
-
-            </div>
-
-            <div id="occupations-results" name="result-card" style="display: none;">
-
-                <div id="occupations-card-age-wrapper" class="card mb-2">
-                    <div class="card-header">
-                        Occupation (<span name="data-total-label"></span>: <span name="data-total"></span>)
-                    </div>
-                    <div class="card-body">
-                        <div id="occupations-widget-wrapper" class="widget-toggle-wrapper"></div>
-                    </div>
-                </div>
-
             </div>
         </div>
 
