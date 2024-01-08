@@ -594,7 +594,7 @@ var config = {
                                                         },
                                                         "C03782V04531": {
                                                             "category": {
-                                                                "index": ["PRE19"]
+                                                                "index": []
                                                             }
                                                         }
                                                     },
