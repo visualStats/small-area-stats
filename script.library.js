@@ -29,40 +29,42 @@ fetchSmallAreas = function (newArea) {
 };
 
 renderData = function () {
-    $("#indicators-wrapper").empty();
 
-    var theme = $.grep(config.themes, function (element, index) {
-        return element.id == $("select[name=theme]").val();
-    })[0];
+    $.ajax({
+        "url": "https://cdn.jsdelivr.net/gh/visualStats/small-area-stats/indicators/" + $("select[name=theme]").val() + ".json",
+        "dataType": "json",
+        "success": function (result) {
+            $("#indicators-wrapper").empty();
 
-    $.each(theme.indicators, function (index, value) {
+            $.each(result, function (index, value) {
 
-        var indicatorCard = $('#templates [name="indicator-card"]').clone();
-        indicatorCard.attr("id", "results-indicator-" + index);
-        indicatorCard.find('[name="widget"]').attr("id", "results-indicator-widget-" + index);
-        indicatorCard.find('[name="title"]').text(value.title);
-        $("#indicators-wrapper").append(indicatorCard);
+                var indicatorCard = $('#templates [name="indicator-card"]').clone();
+                indicatorCard.attr("id", "results-indicator-" + index);
+                indicatorCard.find('[name="widget"]').attr("id", "results-indicator-widget-" + index);
+                indicatorCard.find('[name="title"]').text(value.title);
+                $("#indicators-wrapper").append(indicatorCard);
 
-        var mapConfig = $.extend(true, {}, value.map.snippet);
-        mapConfig.data.datasets[0].api.query.data.params.dimension.C04172V04943.category.index = smallAreaGuids;
-        mapConfig.options.geojson = "https://cdn.jsdelivr.net/gh/visualStats/small-area-stats/small_area_geojson/" + $("select[name=select-area]").val() + ".geojson";
-        t4Sdk.pxWidget.create(
-            "map",
-            "results-indicator-widget-" + index,
-            true,
-            mapConfig,
-            "dropdown",
-            value.map.toggleDimension,
-            value.map.toggleVariables,
-            value.map.defaultVariable
-        );
+                var mapConfig = $.extend(true, {}, value.map.snippet);
+                mapConfig.data.datasets[0].api.query.data.params.dimension.C04172V04943.category.index = smallAreaGuids;
+                mapConfig.options.geojson = "https://cdn.jsdelivr.net/gh/visualStats/small-area-stats/small_area_geojson/" + $("select[name=select-area]").val() + ".geojson";
+                t4Sdk.pxWidget.create(
+                    "map",
+                    "results-indicator-widget-" + index,
+                    true,
+                    mapConfig,
+                    "dropdown",
+                    value.map.toggleDimension,
+                    value.map.toggleVariables,
+                    value.map.defaultVariable
+                );
 
-        $("#results-indicator-widget-" + index + " select").on("change", function () {
-            renderTotal($.extend(true, {}, value.total), value.map.toggleDimension, "#results-indicator-" + index);
-        });
+                $("#results-indicator-widget-" + index + " select").on("change", function () {
+                    renderTotal($.extend(true, {}, value.total), value.map.toggleDimension, "#results-indicator-" + index);
+                });
 
-    });
-
+            });
+        }
+    })
 };
 
 renderTotal = function (query, toggleDimension, indicator) {
