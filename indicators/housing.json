@@ -1,0 +1,170 @@
+[
+    {
+        "title": "Year house built",
+        "total": {
+            "jsonrpc": "2.0",
+            "method": "PxStat.Data.Cube_API.ReadDataset",
+            "params": {
+                "class": "query",
+                "id": [
+                    "STATISTIC",
+                    "C04160V04929",
+                    "C03782V04531"
+                ],
+                "dimension": {
+                    "STATISTIC": {
+                        "category": {
+                            "index": [
+                                "SAP2022T6T2C01"
+                            ]
+                        }
+                    },
+                    "C04160V04929": {
+                        "category": {
+                            "index": []
+                        }
+                    },
+                    "C03782V04531": {
+                        "category": {
+                            "index": []
+                        }
+                    }
+                },
+                "extension": {
+                    "pivot": null,
+                    "codes": false,
+                    "language": {
+                        "code": "en"
+                    },
+                    "format": {
+                        "type": "JSON-stat",
+                        "version": "2.0"
+                    },
+                    "matrix": "SAP2022T6T2TOWN22"
+                },
+                "version": "2.0"
+            }
+        },
+        "map": {
+            "toggleDimension": "C03782V04531",
+            "toggleVariables": null,
+            "defaultVariable": null,
+            "snippet": {
+                "autoupdate": true,
+                "matrix": null,
+                "mapDimension": "C04172V04943",
+                "copyright": true,
+                "link": "https://data.cso.ie/table/SAP2022T6T2SA",
+                "title": null,
+                "borders": true,
+                "colorScale": "red",
+                "tooltipTitle": null,
+                "defaultContent": "..",
+                "fullScreen": {
+                    "title": "View Fullscreen",
+                    "titleCancel": "Exit Fullscreen"
+                },
+                "data": {
+                    "datasets": [
+                        {
+                            "api": {
+                                "query": {
+                                    "url": "https://ws.cso.ie/public/api.jsonrpc",
+                                    "data": {
+                                        "jsonrpc": "2.0",
+                                        "method": "PxStat.Data.Cube_API.ReadDataset",
+                                        "params": {
+                                            "class": "query",
+                                            "id": [
+                                                "STATISTIC",
+                                                "TLIST(A1)",
+                                                "C04172V04943",
+                                                "C03782V04531"
+                                            ],
+                                            "dimension": {
+                                                "STATISTIC": {
+                                                    "category": {
+                                                        "index": [
+                                                            "SAP2022T6T2C01"
+                                                        ]
+                                                    }
+                                                },
+                                                "TLIST(A1)": {
+                                                    "category": {
+                                                        "index": [
+                                                            "2022"
+                                                        ]
+                                                    }
+                                                },
+                                                "C04172V04943": {
+                                                    "category": {
+                                                        "index": null
+                                                    }
+                                                },
+                                                "C03782V04531": {
+                                                    "category": {
+                                                        "index": []
+                                                    }
+                                                }
+                                            },
+                                            "extension": {
+                                                "language": {
+                                                    "code": "en"
+                                                },
+                                                "format": {
+                                                    "type": "JSON-stat",
+                                                    "version": "2.0"
+                                                },
+                                                "matrix": "SAP2022T6T2SA"
+                                            },
+                                            "version": "2.0",
+                                            "m2m": false
+                                        }
+                                    }
+                                },
+                                "response": {}
+                            },
+                            "fluidTime": [
+                                0
+                            ]
+                        }
+                    ]
+                },
+                "metadata": {
+                    "api": {
+                        "query": {
+                            "url": "https://ws.cso.ie/public/api.jsonrpc",
+                            "data": {
+                                "jsonrpc": "2.0",
+                                "method": "PxStat.Data.Cube_API.ReadMetadata",
+                                "params": {
+                                    "matrix": "SAP2022T6T2SA",
+                                    "language": "en",
+                                    "format": {
+                                        "type": "JSON-stat",
+                                        "version": "2.0"
+                                    }
+                                },
+                                "version": "2.0"
+                            }
+                        },
+                        "response": {}
+                    }
+                },
+                "options": {
+                    "mode": "k",
+                    "geojson": null
+                },
+                "baseMap": {
+                    "leaflet": [],
+                    "esri": [
+                        {
+                            "url": "https://utility.arcgis.com/usrsvcs/servers/88f1db9e4ae04df69e499223b8295843/rest/services/MapGeniePremiumWM/MapServer",
+                            "disclaimer": "You can use the OSi basemap layer only in conjunction with the CSO map widgets, all other rights are reserved by OSi."
+                        }
+                    ]
+                }
+            }
+        }
+    }
+]
