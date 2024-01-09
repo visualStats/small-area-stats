@@ -31,7 +31,8 @@ fetchSmallAreas = function (newArea) {
 renderData = function () {
 $("#indicators-wrapper").empty();
     $.ajax({
-        "url": "https://cdn.jsdelivr.net/gh/visualStats/small-area-stats/indicators/" + $("select[name=theme]").val() + ".json",
+        //"url": "https://cdn.jsdelivr.net/gh/visualStats/small-area-stats/indicators/" + $("select[name=theme]").val() + ".json",
+        "url": "/indicators/" + $("select[name=theme]").val() + ".json",
         "dataType": "json",
         "success": function (result) {
             
