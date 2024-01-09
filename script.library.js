@@ -29,13 +29,12 @@ fetchSmallAreas = function (newArea) {
 };
 
 renderData = function () {
-
+$("#indicators-wrapper").empty();
     $.ajax({
         "url": "https://cdn.jsdelivr.net/gh/visualStats/small-area-stats/indicators/" + $("select[name=theme]").val() + ".json",
         "dataType": "json",
         "success": function (result) {
-            $("#indicators-wrapper").empty();
-
+            
             $.each(result, function (index, value) {
 
                 var indicatorCard = $('#templates [name="indicator-card"]').clone();
