@@ -12,6 +12,7 @@ $(document).ready(function() {
                 data: result
             }).on('select2:select', function(e) {
                 if ($(this).val()) {
+                    $("#results-wrapper").find('[name="title"]').hide();
                     $("#indicators-wrapper").empty();
                     fetchSmallAreas(true);
                 }
