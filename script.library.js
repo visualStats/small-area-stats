@@ -29,8 +29,6 @@ fetchSmallAreas = function(newArea) {
 };
 
 renderData = function() {
-    $("#indicators-wrapper").empty();
-
     $.getJSON("indicators/" + $("select[name=theme]").val() + ".json", function(result) {
         $.each(result, function(index, value) {
             var indicatorCard = $('#templates [name="indicator-card"]').clone();
