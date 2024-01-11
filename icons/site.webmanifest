@@ -1,5 +1,5 @@
 {
-    "name": "",
+    "name": "Census 2022 Urban Data",
     "short_name": "",
     "icons": [
         {
@@ -15,5 +15,5 @@
     ],
     "theme_color": "#ffffff",
     "background_color": "#ffffff",
-    "display": "standalone"
+    "display": "minimal-ui"
 }
