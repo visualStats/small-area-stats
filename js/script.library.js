@@ -49,8 +49,14 @@ renderData = function () {
                 value.map.toggleDimension,
                 value.map.toggleVariables,
                 value.map.defaultVariable,
-                "bootstrap-5"
+                {
+                    "width": '100%',
+                    "theme": "bootstrap-5"
+                }
             );
+
+            $('#results-indicator-widget-' + index + ' [name="toggle-select-label"]').addClass("form-label");
+            $('#results-indicator-widget-' + index + ' .widget-toggle-input-group').addClass("mb-3");
 
             $("#results-indicator-widget-" + index + " select").on("change", function () {
                 renderTotal($.extend(true, {}, value.total), value.map.toggleDimension, "#results-indicator-" + index);

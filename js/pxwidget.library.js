@@ -23,9 +23,8 @@ t4Sdk.dataConnector = {};
  * @param {*} defaultVariable 
  * @returns 
  */
-t4Sdk.pxWidget.create = function (type, elementId, isLive, snippet, toggleType, toggleDimension, toggleVariables, defaultVariable, theme) {
-    debugger
-    theme = theme || null;
+t4Sdk.pxWidget.create = function (type, elementId, isLive, snippet, toggleType, toggleDimension, toggleVariables, defaultVariable, select2Options) {
+    select2Options = select2Options || {};
     toggleVariables = toggleVariables || null;
     defaultVariable = defaultVariable || null;
 
@@ -141,7 +140,7 @@ t4Sdk.pxWidget.create = function (type, elementId, isLive, snippet, toggleType, 
         $("<div>", {
             "class": "widget-toggle-panel",
             "html": $("<div>", {
-                "class": "widget-toggle-input-group" + (theme == 'bootstrap-5' ? ' mb-3' : ""),
+                "class": "widget-toggle-input-group"
             }).get(0).outerHTML
         }).get(0).outerHTML
     );
@@ -153,7 +152,7 @@ t4Sdk.pxWidget.create = function (type, elementId, isLive, snippet, toggleType, 
                     "class": "widget-toggle-input-group-prepend",
                     "html": $("<label>", {
                         "name": "toggle-select-label",
-                        "class": theme == 'bootstrap-5' ? 'form-label' : "widget-toggle-input-group-text",
+                        "class": "widget-toggle-input-group-text",
                         "for": "#" + elementId + "-toggle-select"
                     }).get(0).outerHTML
                 }).get(0).outerHTML
@@ -161,15 +160,12 @@ t4Sdk.pxWidget.create = function (type, elementId, isLive, snippet, toggleType, 
             $("#" + elementId + " .widget-toggle-input-group").append(
                 $("<select>", {
                     "name": "toggle-select",
-                    "class": theme == 'bootstrap-5' ? '' : "widget-toggle-select widget-toggle-custom-select",
+                    "class": "widget-toggle-select widget-toggle-custom-select",
                     "dimension": toggleDimension.trim(),
                     "id": elementId + "-toggle-select"
                 }).get(0).outerHTML
             );
-            $("#" + elementId + " .widget-toggle-input-group [name=toggle-select]").select2({
-                width: theme == 'bootstrap-5' ? '100%' : null,
-                theme: theme
-            });
+            $("#" + elementId + " .widget-toggle-input-group [name=toggle-select]").select2(select2Options);
         case "buttons":
             $("#" + elementId + " .widget-toggle-input-group").append(
                 $("<div>", {
