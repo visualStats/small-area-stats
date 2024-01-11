@@ -56,7 +56,7 @@ renderData = function () {
             );
 
             $('#results-indicator-widget-' + index + ' [name="toggle-select-label"]').addClass("form-label");
-            $('#results-indicator-widget-' + index + ' .widget-toggle-input-group').addClass("mb-3");
+            $('#results-indicator-widget-' + index + ' .widget-toggle-input-group').addClass("p-3 mb-3");
 
             $("#results-indicator-widget-" + index + " select").on("change", function () {
                 renderTotal($.extend(true, {}, value.total), value.map.toggleDimension, "#results-indicator-" + index);
