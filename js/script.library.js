@@ -8,7 +8,7 @@ renderThemes = function () {
     });
 };
 
-fetchSmallAreas = function (newArea) {
+fetchSmallAreas = function () {
     $.ajax({
         "url": "https://cdn.jsdelivr.net/gh/visualStats/small-area-stats/small_area_geojson/" + $("select[name=select-area]").val() + ".geojson",
         "dataType": "json",
