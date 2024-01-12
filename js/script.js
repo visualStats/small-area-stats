@@ -26,7 +26,7 @@ $(document).ready(function () {
     });
 
     $(window).scroll(function () {
-        if ($(this).scrollTop() > 50) {
+        if ($(this).scrollTop() > 600) {
             $('#back-to-top').fadeIn();
         } else {
             $('#back-to-top').fadeOut();
