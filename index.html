@@ -10,6 +10,9 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
+    <!-- Font-awesome - https://github.com/FortAwesome/Font-Awesome/-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/FortAwesome/Font-Awesome@5.11.2/css/all.min.css" integrity="sha256-+N4/V/SbAFiW1MPBCXnfnP9QSN3+Keu+NlB+0ev/YKQ=" crossorigin="anonymous">
+
     <!--PxWidget https://github.com/CSOIreland/PxWidget-->
     <script src="https://cdn.jsdelivr.net/gh/CSOIreland/PxWidget@2.6.4/js/isogram.min.js"></script>
 
@@ -46,12 +49,12 @@
 
 <body>
 
-    <div class="container-fluid p-5 text-bg-light text-center">
+    <div class="container-fluid p-5 text-bg-light text-center shadow">
         <h1>Census 2022 Urban Areas Data</h1>
         <p>See a breakdown of Census 2022 data for towns and villages</p>
     </div>
     <div class="container mt-2">
-        <div class="row">
+        <div class="row" id="inputs">
             <div class="col-lg-6 mt-2">
                 <div class="input-group mb-3">
                     <label class="input-group-text" for="inputGroupSelect01">Town</label>
@@ -84,6 +87,17 @@
             </div>
         </div>
     </div>
+    <style>
+        .back-to-top {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            display: none;
+        }
+    </style>
+
+    <a id="back-to-top" href="#" class="btn btn-dark btn-lg back-to-top" role="button"><i class="fas fa-chevron-up"></i></a>
+
 </body>
 
 </html>

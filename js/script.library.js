@@ -65,6 +65,10 @@ renderData = function () {
         });
     });
 
+    $('html, body').animate({
+        scrollTop: $("#inputs").offset().top
+    }, 1000);
+
 };
 
 renderTotal = function (query, toggleDimension, indicator) {
