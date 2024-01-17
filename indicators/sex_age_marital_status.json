@@ -340,7 +340,7 @@
                 "options": {
                     "mode": "k",
                     "geojson": null,
-                    "identifier": "SA_GUID"
+                    "identifier": null
                 },
                 "baseMap": {
                     "leaflet": [],
