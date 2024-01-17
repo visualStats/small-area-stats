@@ -41,15 +41,6 @@ renderData = function () {
             mapConfig.data.datasets[0].api.query.data.params.dimension.C04172V04943.category.index = smallAreaGuids;
             mapConfig.options.geojson = "https://cdn.jsdelivr.net/gh/visualStats/small-area-stats/small_area_geojson/" + $("select[name=select-area]").val() + ".geojson";
 
-            //if only one feature in an area, change number of steps and colours
-            if (smallAreaGuids.length == 1) {
-                mapConfig.options.steps = 1;
-                mapConfig.options.colors = [
-                    "#ff0000"
-                ];
-            }
-
-
             t4Sdk.pxWidget.create(
                 "map",
                 "results-indicator-widget-" + index,
