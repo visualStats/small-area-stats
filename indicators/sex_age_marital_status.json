@@ -162,7 +162,7 @@
                     }
                 },
                 "options": {
-                    "mode": "k",
+                    "mode": "q",
                     "geojson": null
                 },
                 "baseMap": {
@@ -338,7 +338,7 @@
                     }
                 },
                 "options": {
-                    "mode": "k",
+                    "mode": "q",
                     "geojson": null,
                     "identifier": null
                 },
@@ -498,7 +498,7 @@
                     }
                 },
                 "options": {
-                    "mode": "k",
+                    "mode": "q",
                     "geojson": null
                 },
                 "baseMap": {

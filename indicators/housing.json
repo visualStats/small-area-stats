@@ -1,4 +1,5 @@
-[{
+[
+    {
         "title": "Year house built",
         "total": {
             "jsonrpc": "2.0",
@@ -64,7 +65,8 @@
                     "titleCancel": "Exit Fullscreen"
                 },
                 "data": {
-                    "datasets": [{
+                    "datasets": [
+                        {
                             "api": {
                                 "query": {
                                     "url": "https://ws.cso.ie/public/api.jsonrpc",
@@ -150,12 +152,13 @@
                     }
                 },
                 "options": {
-                    "mode": "k",
+                    "mode": "q",
                     "geojson": null
                 },
                 "baseMap": {
                     "leaflet": [],
-                    "esri": [{
+                    "esri": [
+                        {
                             "url": "https://utility.arcgis.com/usrsvcs/servers/88f1db9e4ae04df69e499223b8295843/rest/services/MapGeniePremiumWM/MapServer",
                             "disclaimer": "You can use the OSi basemap layer only in conjunction with the CSO map widgets, all other rights are reserved by OSi."
                         }
@@ -163,7 +166,8 @@
                 }
             }
         }
-    }, {
+    },
+    {
         "title": "Private Households - Number of households",
         "total": {
             "jsonrpc": "2.0",
@@ -229,7 +233,8 @@
                     "titleCancel": "Exit Fullscreen"
                 },
                 "data": {
-                    "datasets": [{
+                    "datasets": [
+                        {
                             "api": {
                                 "query": {
                                     "url": "https://ws.cso.ie/public/api.jsonrpc",
@@ -238,16 +243,25 @@
                                         "method": "PxStat.Data.Cube_API.ReadDataset",
                                         "params": {
                                             "class": "query",
-                                            "id": ["STATISTIC", "TLIST(A1)", "C04172V04943", "C03774V04528"],
+                                            "id": [
+                                                "STATISTIC",
+                                                "TLIST(A1)",
+                                                "C04172V04943",
+                                                "C03774V04528"
+                                            ],
                                             "dimension": {
                                                 "STATISTIC": {
                                                     "category": {
-                                                        "index": ["SAP2022T6T1C01"]
+                                                        "index": [
+                                                            "SAP2022T6T1C01"
+                                                        ]
                                                     }
                                                 },
                                                 "TLIST(A1)": {
                                                     "category": {
-                                                        "index": ["2022"]
+                                                        "index": [
+                                                            "2022"
+                                                        ]
                                                     }
                                                 },
                                                 "C04172V04943": {
@@ -278,7 +292,9 @@
                                 },
                                 "response": {}
                             },
-                            "fluidTime": [0]
+                            "fluidTime": [
+                                0
+                            ]
                         }
                     ]
                 },
@@ -304,12 +320,13 @@
                     }
                 },
                 "options": {
-                    "mode": "k",
+                    "mode": "q",
                     "geojson": null
                 },
                 "baseMap": {
                     "leaflet": [],
-                    "esri": [{
+                    "esri": [
+                        {
                             "url": "https://utility.arcgis.com/usrsvcs/servers/88f1db9e4ae04df69e499223b8295843/rest/services/MapGeniePremiumWM/MapServer",
                             "disclaimer": "You can use the OSi basemap layer only in conjunction with the CSO map widgets, all other rights are reserved by OSi."
                         }
@@ -317,7 +334,8 @@
                 }
             }
         }
-    }, {
+    },
+    {
         "title": "Private Households - Number of persons",
         "total": {
             "jsonrpc": "2.0",
@@ -383,7 +401,8 @@
                     "titleCancel": "Exit Fullscreen"
                 },
                 "data": {
-                    "datasets": [{
+                    "datasets": [
+                        {
                             "api": {
                                 "query": {
                                     "url": "https://ws.cso.ie/public/api.jsonrpc",
@@ -392,16 +411,25 @@
                                         "method": "PxStat.Data.Cube_API.ReadDataset",
                                         "params": {
                                             "class": "query",
-                                            "id": ["STATISTIC", "TLIST(A1)", "C04172V04943", "C03774V04528"],
+                                            "id": [
+                                                "STATISTIC",
+                                                "TLIST(A1)",
+                                                "C04172V04943",
+                                                "C03774V04528"
+                                            ],
                                             "dimension": {
                                                 "STATISTIC": {
                                                     "category": {
-                                                        "index": ["SAP2022T6T1C02"]
+                                                        "index": [
+                                                            "SAP2022T6T1C02"
+                                                        ]
                                                     }
                                                 },
                                                 "TLIST(A1)": {
                                                     "category": {
-                                                        "index": ["2022"]
+                                                        "index": [
+                                                            "2022"
+                                                        ]
                                                     }
                                                 },
                                                 "C04172V04943": {
@@ -432,7 +460,9 @@
                                 },
                                 "response": {}
                             },
-                            "fluidTime": [0]
+                            "fluidTime": [
+                                0
+                            ]
                         }
                     ]
                 },
@@ -458,12 +488,13 @@
                     }
                 },
                 "options": {
-                    "mode": "k",
+                    "mode": "q",
                     "geojson": null
                 },
                 "baseMap": {
                     "leaflet": [],
-                    "esri": [{
+                    "esri": [
+                        {
                             "url": "https://utility.arcgis.com/usrsvcs/servers/88f1db9e4ae04df69e499223b8295843/rest/services/MapGeniePremiumWM/MapServer",
                             "disclaimer": "You can use the OSi basemap layer only in conjunction with the CSO map widgets, all other rights are reserved by OSi."
                         }
@@ -471,7 +502,8 @@
                 }
             }
         }
-    }, {
+    },
+    {
         "title": "Occupancy",
         "total": {
             "jsonrpc": "2.0",
@@ -529,7 +561,8 @@
                     "titleCancel": "Exit Fullscreen"
                 },
                 "data": {
-                    "datasets": [{
+                    "datasets": [
+                        {
                             "api": {
                                 "query": {
                                     "url": "https://ws.cso.ie/public/api.jsonrpc",
@@ -538,16 +571,25 @@
                                         "method": "PxStat.Data.Cube_API.ReadDataset",
                                         "params": {
                                             "class": "query",
-                                            "id": ["STATISTIC", "TLIST(A1)", "C04172V04943", "C03772V04511"],
+                                            "id": [
+                                                "STATISTIC",
+                                                "TLIST(A1)",
+                                                "C04172V04943",
+                                                "C03772V04511"
+                                            ],
                                             "dimension": {
                                                 "STATISTIC": {
                                                     "category": {
-                                                        "index": ["SAP2022T6T8C01"]
+                                                        "index": [
+                                                            "SAP2022T6T8C01"
+                                                        ]
                                                     }
                                                 },
                                                 "TLIST(A1)": {
                                                     "category": {
-                                                        "index": ["2022"]
+                                                        "index": [
+                                                            "2022"
+                                                        ]
                                                     }
                                                 },
                                                 "C04172V04943": {
@@ -578,7 +620,9 @@
                                 },
                                 "response": {}
                             },
-                            "fluidTime": [0]
+                            "fluidTime": [
+                                0
+                            ]
                         }
                     ]
                 },
@@ -604,12 +648,13 @@
                     }
                 },
                 "options": {
-                    "mode": "k",
+                    "mode": "q",
                     "geojson": null
                 },
                 "baseMap": {
                     "leaflet": [],
-                    "esri": [{
+                    "esri": [
+                        {
                             "url": "https://utility.arcgis.com/usrsvcs/servers/88f1db9e4ae04df69e499223b8295843/rest/services/MapGeniePremiumWM/MapServer",
                             "disclaimer": "You can use the OSi basemap layer only in conjunction with the CSO map widgets, all other rights are reserved by OSi."
                         }
